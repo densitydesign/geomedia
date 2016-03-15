@@ -1,0 +1,534 @@
+
+/* Move down content because we have a fixed navbar that is 80px tall */
+body {
+  padding-top: 80px;
+}
+
+
+/* Assets */
+
+
+.ClearPadding{
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.AddMargin{
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.Aligner{
+  display: flex;
+  justify-content: center;
+  display: -webkit-flex;
+  display: flex;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.AlignerItem {
+  margin: 0;
+}
+
+.MediaColor{
+  color:#EF4141;
+}
+
+.CountriesColor{
+  color:#427A99;
+}
+
+/* Navbar */
+
+#navbar .row{
+  height: 79px;
+}
+
+#navbar{
+  height: 79px !important;
+}
+
+
+#HeaderLeft{
+  background-color: #F9F9F9;
+  border-right: 1px solid #CACACA;
+  border-bottom: 1px solid #CACACA;
+
+}
+
+#HeaderLeft p{
+
+}
+
+#home{
+  height: 79px;
+  background-color: #F9F9F9;
+  border-right: 1px solid #CACACA;
+}
+
+
+#title{
+  background-color: #F9F9F9;
+  border-right: 1px solid #CACACA;
+  height: 79px;
+  text-align: center;
+}
+
+#title h3{
+  text-transform: uppercase;
+  font-size: 18px;
+  color: #4A4A4A;
+  letter-spacing: 1px;
+  font-family: 'Source Sans Pro', sans-serif;
+
+}
+
+#DataDescription{
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 11px;
+  color: #4A4A4A;
+  letter-spacing: 0.61px;
+  line-height: 15px;
+  display: flex;
+  flex-direction: column;
+  height: 79px;
+  justify-content: center;
+}
+
+#DataDescription p{
+  margin: 0;
+  padding: 10px;
+}
+
+/* Dimensions buttons */
+
+#HeaderRight{
+  height: 80px;
+}
+
+.FirstDimension{
+  height: 50px;
+  background-color: #F9F9F9;
+  text-align: center;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 18px;
+
+}
+
+.SecondDimension{
+  height: 30px;
+  background-color: #F9F9F9;
+  text-align: center;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 14px;
+
+}
+
+.DimensionButton{
+  width: 100%;
+  height:100%;
+  border-radius: 0;
+}
+
+
+
+.TimeButton{
+  background-color: #F9F9F9;
+  border-right: 1px solid #CACACA;
+  border-bottom: 1px solid #CACACA;
+  border-top: 0px;
+  border-left: 0px;
+  color: #E2BF29;
+  letter-spacing: 1px !important;
+}
+
+.TimeButton:hover,
+.TimeButton:focus
+{	background-color: #E2BF29 !important;
+  border: 1px solid #E2BF29 !important;
+  outline: none !important;
+  box-shadow: none;
+
+}
+
+
+
+.CountriesButton{
+  background-color: #F9F9F9;
+  border-right: 1px solid #CACACA;
+  border-bottom: 1px solid #CACACA;
+  border-top: 0px;
+  border-left: 0px;
+  color: #427A99;
+  letter-spacing: 1px !important;
+}
+
+.CountriesButton:hover,
+.CountriesButton:focus
+{
+  background-color: #427A99 !important;
+  border: 1px solid #427A99 !important;
+  outline: none !important;
+  box-shadow: none;
+}
+
+
+
+.MediaButton{
+  background-color: #F9F9F9;
+  border-right: 1px solid #CACACA;
+  border-bottom: 1px solid #CACACA;
+  border-top: 0px;
+  border-left: 0px;
+  color: #EF4141;
+  letter-spacing: 1px !important;
+}
+
+.MediaButton:hover,
+.MediaButton:focus
+{
+  background-color: #EF4141 !important;
+  border: 1px solid #EF4141 !important;
+  outline: none !important;
+  box-shadow: none;
+
+}
+
+/* Sidebar*/
+
+/* Hide for mobile, show later */
+.sidebar {
+  display: none;
+}
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 80px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #F9F9F9;
+    border-right: 1px solid #CACACA;
+    /*padding: 0px 20px 20px 20px;*/
+  }
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #428bca;
+}
+
+
+/* Sidebar*/
+/*
+
+
+/* TimePanel */
+
+
+.TimePanel{
+  border-bottom: 1px solid #CACACA;
+}
+
+.TimePanel h2{
+  padding-bottom: 9px;
+  border-bottom: solid 1px #E3E3E3;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 14px;
+  color: #E2BF29;
+  letter-spacing: 0.78px;
+}
+
+.TimePanel img{
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+}
+/* Media and Countries Panels */
+
+.CountriesPanel button,
+.MediaPanel button
+{
+  background: #FFFFFF;
+  border: 1px solid #CACACA;
+  border-radius: 15px;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 14px;
+  color: #CACACA;
+  letter-spacing: 0.78px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  margin: 5px 10px 5px 0px;
+}
+
+
+
+.SortGroup{
+  border-bottom: 1px solid #E3E3E3;
+  padding-top: 5px;
+  padding-bottom: 15px;
+}
+
+.SortGroup h3{
+
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 14px;
+  color: #4A4A4A;
+  letter-spacing: 0.78px;
+  display: inline-block;
+}
+
+
+
+.FilterGroup{
+  padding: 20px 15px 20px 15px;
+}
+
+
+.FilterGroup .dropdown-menu{
+  width: 100%;
+  border-radius: 0px;
+  border: 0px;
+  box-shadow: none;
+  min-height: 400px;
+  padding-left: 15px;
+  padding-right: 15px;
+  min-width: 0px !important;
+  background-color: #F9F9F9;
+
+}
+
+.FilterGroup .dropdown-menu h3{
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 14px;
+  color: #4A4A4A;
+  letter-spacing: 0.78px;
+  display: inline-block;
+  width: 100%;
+  padding-bottom: 10px;
+
+}
+
+.FilterGroup .dropdown-menu li{
+  display: inline-block;
+}
+
+.FilterGroup .dropdown-menu .divider{
+  border-bottom: 1px solid #E3E3E3;
+  margin-top: 30px;
+  width: 100%;
+}
+
+
+
+
+.Search {
+
+  border-top: 1px solid #CACACA;
+  border-bottom: 1px solid #CACACA;
+  flex-direction: row;
+  display: flex;
+
+}
+
+.SearchIcon{
+
+  border-right: 1px solid #CACACA;
+  border-top: 0px;
+  border-left: 0px;
+  border-bottom: 0px;
+  margin-right: 0px!important;
+  width: 45px;
+
+}
+
+.Search input{
+  border: 0px;
+  box-shadow: none;
+  height: 39px;
+  font-family: 'Source Sans Pro', sans-serif;
+  letter-spacing: 0.78px;
+  background-color: #F9F9F9;
+}
+
+
+
+
+/* Lists */
+.DeselectedItem{
+  background-color: #E3E3E3 !important;
+  color: #CACACA !important;
+}
+.DeselectedItem .badge {
+  color: #CACACA !important;
+}
+
+
+.ElasticList .list-group-item:hover{
+  background-color: #E3E3E3 !important;
+  color: #CACACA !important;
+}
+
+.ElasticList .list-group-item{
+  border-top: 0px;
+  border-right: 0px;
+  border-left: 0px;
+  border-bottom: 1px solid #CACACA;
+  margin-bottom: 0px;
+  background-color: #F9F9F9;
+  font-family: 'Source Serif Pro', serif;
+  font-weight: 400px;
+  font-size: 13px;
+  color: #4A4A4A;
+  letter-spacing: 0.72px;
+}
+
+.ElasticList .badge{
+  font-family: 'Source Serif Pro', serif;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.72px;
+  background: none;
+  border:0px;
+}
+
+.MediaPanel .ElasticList .badge{
+  color: #EF4141;
+}
+
+.CountriesPanel .ElasticList .badge{
+  color: #427A99;
+}
+
+
+
+/* CountriesPanel */
+
+
+
+
+.CountriesPanel h2{
+  padding-bottom: 9px;
+  border-bottom: solid 1px #E3E3E3;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 14px;
+  color: #427A99;
+  letter-spacing: 0.78px;
+  margin-bottom: 0px;
+}
+
+.CountriesPanel button:hover,
+.CountriesPanel button:focus,
+.CountriesPanel button:active
+{
+  background-color: #427A99;
+  border: 1px solid #427A99;
+  color: #F9F9F9;
+}
+
+
+/* MediaPanel */
+
+
+.MediaPanel{
+  border-right: 1px solid #CACACA;
+}
+
+.MediaPanel h2{
+  padding-bottom: 9px;
+  border-bottom: solid 1px #E3E3E3;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 14px;
+  color: #EF4141;
+  letter-spacing: 0.78px;
+  margin-bottom: 0px;
+
+}
+
+
+.MediaPanel button:hover,
+.MediaPanel button:focus,
+.MediaPanel button:active
+{
+  background-color: #EF4141;
+  border: 1px solid #EF4141;
+  color: #F9F9F9;
+}
+
+
+/* Legend panel */
+
+
+
+
+.LegendPanel{
+  height: 400px;
+  background-color: red;
+  border: 1px solid  blue;
+
+}
+
+
+
+
+@keyframes ShowLegendAnim {
+  from {margin-left: 100%; display: block;}
+  to {margin-left: 66.6666666%; display: block;}
+}
+
+@keyframes HideLegendAnim {
+  from {margin-left: 66.6666666%; display: block;}
+  to {margin-left: 100% !important; display: none;}
+}
+
+.StartLegend{
+  display: none;
+}
+
+
+.ShowLegend{
+  animation-name: ShowLegendAnim;
+  animation-duration: 1s;
+
+
+}
+
+.HideLegend{
+  animation-name: HideLegendAnim;
+  animation-duration: 1s;
+
+
+}
+
+
+#showhide{
+  width: 100px;
+  height: 30px;
+  left: 900px;
+  position: absolute;
+  background-color: red;
+}
+
+datapanel{
+  display:block;
+}
