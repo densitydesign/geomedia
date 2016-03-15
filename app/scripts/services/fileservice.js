@@ -7,7 +7,7 @@
  * # apiService
  * Factory in the mihReportApp.
  */
-angular.module('mihReportApp')
+angular.module('geomediaApp')
   .factory('fileService', function ($q, $http) {
 
     return {

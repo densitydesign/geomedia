@@ -12,6 +12,7 @@ angular.module('geomediaApp')
 
     var data = {};
     var metadata = {};
+    var filterdata = {};
 
     return {
 
@@ -26,6 +27,12 @@ angular.module('geomediaApp')
       },
       getMetaData: function () {
         return metadata;
+      },
+      setFilterData: function (newFilterData) {
+        filterdata = newFilterData;
+      },
+      getFilterData: function () {
+        return filterdata;
       }
 
     }

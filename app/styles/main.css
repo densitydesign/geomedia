@@ -532,3 +532,27 @@ body {
 datapanel{
   display:block;
 }
+
+brushablebars{
+  display:block;
+  width:100%;
+}
+brushablebars .domain{
+  fill:none;
+  stroke:none;
+}
+
+brushablebars svg text{
+  font-family: 'Source Serif Pro', serif;
+  font-size:0.8em;
+}
+
+.brush .extent {
+  stroke: #000;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+
+.day{
+  fill: #E2BF29;
+}

@@ -38,16 +38,21 @@
 
 <!-- Add your site or application content here -->
 
+<loader ng-if="!$root.gotdata"></loader>
 
-<topbar></topbar>
+
+<topbar ng-if="$root.gotdata"></topbar>
 
 <div class="container-fluid">
   <div class="row">
 
 
-  <datapanel></datapanel>
+  <datapanel ng-if="$root.gotdata"></datapanel>
 
-  <div class="col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-8 col-lg-offset-4 main" ng-view=""></div>
+
+
+  <div ng-if="$root.gotdata" class="col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-8 col-lg-offset-4 main" ng-view=""></div>
+  </div>
 </div>
 
 
@@ -82,6 +87,7 @@
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="lib/timeline.js"></script>
 <script src="scripts/app.js"></script>
 <script src="scripts/controllers/main.js"></script>
 <script src="scripts/controllers/time.js"></script>
@@ -91,6 +97,8 @@
 <script src="scripts/controllers/media.js"></script>
 <script src="scripts/controllers/countries.js"></script>
 <script src="scripts/services/fileservice.js"></script>
+<script src="scripts/directives/loader.js"></script>
+<script src="scripts/directives/brushablebars.js"></script>
 <!-- endbuild -->
 </body>
 </html>
