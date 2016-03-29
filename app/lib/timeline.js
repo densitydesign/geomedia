@@ -67,10 +67,11 @@
           .orient("bottom")
 
         // Date parsing.
-        var parseDate = d3.time.format("%d/%m/%Y");
+        var parseDate = d3.time.format("%d/%m/%y");
+
         data.forEach(function(d) {
           if(!d.parsedDate){
-            d.parsedDate = parseDate.parse(d.key);
+            d.parsedDate = new Date(d.key);
           }
         });
 
@@ -84,7 +85,7 @@
         xAxis.tickValues([x.domain()[0], x.domain()[x.domain().length-1]])
           .tickFormat(d3.time.format('%b %y'))
 
-        var yMax = d3.max(data, function(d){return d.values.length})
+        var yMax = d3.max(data, function(d){return d.value})
         y.domain([0, yMax]);
 
 
@@ -98,8 +99,8 @@
         bars.transition().duration(100)
           .attr("x", function(d) { return x(d.parsedDate); })
           .attr("width", x.rangeBand()/2)
-          .attr("y", function(d) { return y(d.values.length); })
-          .attr("height", function(d) { return height - y(d.values.length);});
+          .attr("y", function(d) { return y(d.value); })
+          .attr("height", function(d) { return height - y(d.value);});
 
         bars.enter().append("rect")
           .attr("class", "day")
@@ -112,8 +113,8 @@
           .transition()
           .duration(100)
           .delay(function(d,i){return i*30})
-          .attr("y", function(d) { return y(d.values.length); })
-          .attr("height", function(d) { return height - y(d.values.length);});
+          .attr("y", function(d) { return y(d.value); })
+          .attr("height", function(d) { return height - y(d.value);});
 
         bars.exit().remove();
 

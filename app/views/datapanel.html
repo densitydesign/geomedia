@@ -42,42 +42,15 @@
 
       <div class="ElasticList">
         <ul class="list-group">
-          <li class="list-group-item">
-            <span class="badge">14</span>
-            Cras justo odio
+          <li ng-repeat="media in medias" class="list-group-item">
+            <span class="badge">{{media.value}}</span>
+            {{media.key}}
           </li>
-          <li class="list-group-item">
-            <span class="badge">14</span>
-            Cras justo odio
-          </li>
-          <li class="list-group-item">
-            <span class="badge">14</span>
-            Cras justo odio
-          </li>
-          <li class="list-group-item">
-            <span class="badge">14</span>
-            Cras justo odio
-          </li>
+          <!--
           <li class="list-group-item DeselectedItem">
             <span class="badge">14</span>
             Deselected Times
-          </li>
-          <li class="list-group-item">
-            <span class="badge">14</span>
-            Cras justo odio
-          </li>
-          <li class="list-group-item">
-            <span class="badge">14</span>
-            Cras justo odio
-          </li>
-          <li class="list-group-item">
-            <span class="badge">14</span>
-            Cras justo odio
-          </li>
-          <li class="list-group-item">
-            <span class="badge">14</span>
-            Cras justo odio
-          </li>
+          </li>-->
         </ul>
       </div>
 
@@ -109,29 +82,9 @@
 
       <div class="ElasticList">
         <ul class="list-group">
-          <li class="list-group-item">
-            <span class="badge">14</span>
-            Cras justo odio
-          </li>
-          <li class="list-group-item">
-            <span class="badge">14</span>
-            Cras justo odio
-          </li>
-          <li class="list-group-item">
-            <span class="badge">14</span>
-            Cras justo odio
-          </li>
-          <li class="list-group-item">
-            <span class="badge">14</span>
-            Cras justo odio
-          </li>
-          <li class="list-group-item">
-            <span class="badge">14</span>
-            Cras justo odio
-          </li>
-          <li class="list-group-item">
-            <span class="badge">14</span>
-            Cras justo odio
+          <li ng-repeat="country in countries" ng-if="$index > 0" class="list-group-item">
+            <span class="badge">{{country.value}}</span>
+            {{country.key}}
           </li>
         </ul>
       </div>

@@ -7,7 +7,7 @@
  * # topbar
  */
 angular.module('geomediaApp')
-  .directive('topbar', function ($location, dataservice) {
+  .directive('topbar', function ($location, dataservice, $rootScope) {
     return {
       templateUrl: 'views/topbar.html',
       restrict: 'E',
@@ -18,16 +18,21 @@ angular.module('geomediaApp')
           $location.path(there);
         }
 
-        scope.data = dataservice.getData()
-        scope.meta = dataservice.getMetaData()
-
-
-        scope.$on("newdata", function(){
-          scope.data = dataservice.getData()
+        $rootScope.$watch("gotdata", function(newVal, oldVal){
+          if(newVal) {
+            scope.data = dataservice.getData()
+            scope.num = scope.data.length;
+          }
         })
 
 
-
+        $rootScope.$watch("gotmeta", function(newVal, oldVal){
+          if(newVal) {
+            scope.meta = dataservice.getMetaData()
+          }
+        })
       }
     };
   });
+
+

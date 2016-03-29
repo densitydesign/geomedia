@@ -42,4 +42,15 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+  })
+  .run(function(fileService,dataservice, $rootScope) {
+
+    fileService.getFile('data/FlowMetadata.csv').then(function(d){
+
+      var dsv = d3.dsv(";", "text/plain");
+      dataservice.setMetaData(dsv.parse(d));
+      $rootScope.gotmeta = true;
+
+    })
+
   });

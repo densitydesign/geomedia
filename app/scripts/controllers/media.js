@@ -9,9 +9,7 @@
  */
 angular.module('geomediaApp')
   .controller('MediaCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+   
+    
+    
   });
