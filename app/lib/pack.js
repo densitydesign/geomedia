@@ -62,38 +62,55 @@
 
         var nodes = pack.nodes({key:'root',values:data});
 
-        var node = chart.datum(data).selectAll("g")
+        var circs = chart.datum(data).selectAll("circle")
           .data(nodes)
 
+        var texts = chart.datum(data).selectAll("text")
+          .data(nodes.filter(function(d) { return !d.values && d.count >= countMax*1/4}))
 
+/*
           node.enter().append("g")
           .attr("class", function(d) { return d.parent ? d.values ? "node" : "node node--leaf" : "node node--root"; })
-            .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-        node.selectAll("g")
+        node
           .transition().duration(500)
           .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+*/
 
-
-        node.append("circle")
-          .style("fill", function(d) { return d.parent ? d.values ? "#F9F9F9" : colorScale(d.ratio) : "none"; })
+        circs.enter().append("circle")
           .style("stroke", function(d) { return d.parent ? d.values ? "#CACACA" : 'none' : 'none' })
 
-        node.selectAll("circle")
+        circs
           .transition().duration(500)
-          .attr("r", function(d) { return d.r; });
+          .style("fill", function(d) { return d.parent ? d.values ? "#F9F9F9" : colorScale(d.ratio) : "none"; })
+          .attr("r", function(d) { return d.r; })
+          .attr("cy",function(d){return d.y})
+          .attr("cx",function(d){return d.x})
 
 
-        node.filter(function(d) { return !d.values && d.count >= countMax*1/4})
+        texts
+          .enter()
           .append("text")
-          .transition().duration(500)
           .attr("text-anchor", "middle")
           .attr("dy", "0.3em")
           .text(function(d) { return d.key})
 
-        node
+          texts
+          .transition().duration(500)
+          .attr("x", function(d){return d.x})
+          .attr("y", function(d){return d.y})
+
+
+
+
+        circs
           .exit()
           .remove();
+
+        texts
+          .exit()
+          .remove();
+
 
 
 

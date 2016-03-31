@@ -23,10 +23,11 @@ angular.module('geomediaApp')
 
 
 
-        $rootScope.$watch("bytime",function(newValue,oldValue){
-          if (newValue) {
+        $rootScope.$watch("[startDate,nedDate]",function(newValue,oldValue){
+          if (newValue && newValue != oldValue) {
 
 
+            console.log("yooo!")
 
             var nest = d3.nest()
               .key(function(d) { return medias.getLanguage(d.media.substring(0,2)); })
@@ -36,7 +37,7 @@ angular.module('geomediaApp')
                 obj.count = leaves.length;
                 obj.ratio = leaves.filter(function(d){return d.TAG_event == "Ebola"}).length / leaves.filter(function(d){return d.TAG_event == ""}).length;
                 return obj; })
-              .entries(newValue.bottom(Infinity))
+              .entries($rootScope.bytime.bottom(Infinity))
               .map(function(d){
 
                 d.values.forEach(function(e,j){

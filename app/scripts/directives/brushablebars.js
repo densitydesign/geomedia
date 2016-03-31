@@ -31,8 +31,8 @@ angular.module('geomediaApp')
                 startDate = d[0];
                 endDate = d[1];
 
-                $location.search('startDate', scope.format(startDate));
-                $location.search('endDate', scope.format(endDate));
+               // $location.search('startDate', scope.format(startDate));
+               // $location.search('endDate', scope.format(endDate));
                 $rootScope.$broadcast("dateChange",d);
                 if(!scope.$$phase) {
                   scope.$apply()

@@ -12,8 +12,8 @@
 
       <div class="SortGroup AddMargin">
         <h3>Sort by:</h3>
-        <button type="button" class="btn btn-default btn-sm">value</button>
-        <button type="button" class="btn btn-default btn-sm">name</button>
+        <button type="button" ng-click="sortMedias = 'value'"  ng-class="{'actv':sortMedias=='value'}" class="btn btn-default btn-sm">value</button>
+        <button type="button" ng-click="sortMedias = 'key'"  ng-class="{'actv':sortMedias=='key'}" class="btn btn-default btn-sm">name</button>
       </div>
 
       <div class="dropdown FilterGroup">
@@ -42,9 +42,9 @@
 
       <div class="ElasticList">
         <ul class="list-group">
-          <li ng-repeat="media in medias" class="list-group-item">
+          <li ng-click="media.active = !media.active" ng-class="{'DeselectedItem':!media.active}" ng-repeat="media in medias | orderBy:orderMediaByFilteredKey" class="list-group-item">
             <span class="badge">{{media.value}}</span>
-            {{media.key}}
+            {{media.key | medias}}
           </li>
           <!--
           <li class="list-group-item DeselectedItem">
@@ -63,8 +63,8 @@
 
       <div class="SortGroup AddMargin">
         <h3>Sort by:</h3>
-        <button type="button" class="btn btn-default btn-sm">value</button>
-        <button type="button" class="btn btn-default btn-sm">name</button>
+        <button ng-click="sortCountries = 'value'" type="button" ng-class="{'actv':sortCountries=='value'}" class="btn btn-default btn-sm">value</button>
+        <button ng-click="sortCountries = 'key'" type="button"  ng-class="{'actv':sortCountries=='key'}" class="btn btn-default btn-sm">name</button>
       </div>
 
       <div class="FilterGroup">
@@ -82,22 +82,14 @@
 
       <div class="ElasticList">
         <ul class="list-group">
-          <li ng-repeat="country in countries" ng-if="$index > 0" class="list-group-item">
+          <li ng-click="country.active = !country.active" ng-class="{'DeselectedItem':!country.active}" ng-repeat="country in countries | orderBy:orderCountryByFilteredKey" ng-if="$index > 0" class="list-group-item">
             <span class="badge">{{country.value}}</span>
-            {{country.key}}
+            {{country.key | countries}}
           </li>
         </ul>
       </div>
 
 
     </div>     <!-- End Countries Panel-->
-
-
-
-
   </div>
-
-
-
-
 </div>

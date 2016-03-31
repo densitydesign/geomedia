@@ -22,6 +22,7 @@ angular.module('geomediaApp')
             dataservice.setData(dsv.parse(d));
 
             $rootScope.gotdata = true;
+            $rootScope.keyword= "Ebola";
           })
 
 

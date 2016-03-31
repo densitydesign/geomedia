@@ -38,20 +38,20 @@
 
 <!-- Add your site or application content here -->
 
-<loader ng-if="!$root.gotdata"></loader>
+<loader ng-show="!$root.gotdata"></loader>
 
 
-<topbar ng-if="$root.gotdata"></topbar>
+<topbar ng-show="$root.gotdata"></topbar>
 
 <div class="container-fluid">
   <div class="row">
 
 
-  <datapanel ng-if="$root.gotdata"></datapanel>
+  <datapanel ng-show="$root.gotdata"></datapanel>
 
 
 
-  <div ng-if="$root.gotdata" class="col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-8 col-lg-offset-4 main" ng-view=""></div>
+  <div ng-show="$root.gotdata" class="col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-8 col-lg-offset-4 main" ng-view=""></div>
   </div>
 </div>
 
@@ -66,6 +66,7 @@
   ga('create', 'UA-XXXXX-X');
   ga('send', 'pageview');
 </script>
+
 
 <!-- build:js(.) scripts/vendor.js -->
 <!-- bower:js -->
@@ -90,6 +91,8 @@
 <script src="lib/timeline.js"></script>
 <script src="lib/stream.js"></script>
 <script src="lib/pack.js"></script>
+<script src="lib/sigma.js/sigma.min.js"></script>
+<script src="lib/sigma.js/plugins.min.js"></script>
 <script src="scripts/app.js"></script>
 <script src="scripts/controllers/main.js"></script>
 <script src="scripts/controllers/time.js"></script>
@@ -105,6 +108,8 @@
 <script src="scripts/directives/pack.js"></script>
 <script src="scripts/services/medias.js"></script>
 <script src="scripts/directives/network.js"></script>
+<script src="scripts/filters/medias.js"></script>
+<script src="scripts/filters/countries.js"></script>
 <!-- endbuild -->
 </body>
 </html>

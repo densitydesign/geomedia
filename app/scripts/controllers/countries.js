@@ -8,10 +8,7 @@
  * Controller of the geomediaApp
  */
 angular.module('geomediaApp')
-  .controller('CountriesCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('CountriesCtrl', function ($scope) {
+
+    
   });

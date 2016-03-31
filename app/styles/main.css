@@ -167,11 +167,13 @@ body {
 }
 
 .CountriesButton:hover,
-.CountriesButton:focus
+.CountriesButton:focus,
+.CountriesPanel .actv
 {
   background-color: #427A99 !important;
   border: 1px solid #427A99 !important;
   outline: none !important;
+  color:white;
   box-shadow: none;
 }
 
@@ -188,11 +190,12 @@ body {
 }
 
 .MediaButton:hover,
-.MediaButton:focus
+.MediaButton:focus, .MediaPanel .actv
 {
   background-color: #EF4141 !important;
   border: 1px solid #EF4141 !important;
   outline: none !important;
+  color:white;
   box-shadow: none;
 
 }
@@ -390,6 +393,7 @@ body {
 }
 
 .ElasticList .list-group-item{
+  cursor:pointer;
   border-top: 0px;
   border-right: 0px;
   border-left: 0px;
@@ -401,6 +405,10 @@ body {
   font-size: 13px;
   color: #4A4A4A;
   letter-spacing: 0.72px;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ElasticList .badge{
@@ -556,7 +564,7 @@ brushablebars svg text{
 .day{
   fill: #E2BF29;
 }
-stream, pack{
+stream, pack, network{
   display:block;
   width:100%;
   margin-top:100px;
@@ -582,4 +590,8 @@ svg .node text {
   font-family: 'Source Serif Pro', serif;
   font-size:0.8em;
   fill:#444;
+}
+
+#graph-container{
+  height:600px;
 }
