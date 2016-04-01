@@ -62,11 +62,14 @@
 
         var nodes = pack.nodes({key:'root',values:data});
 
-        var circs = chart.datum(data).selectAll("circle")
-          .data(nodes)
+        var circs = chart//.datum(data)
+          .selectAll("circle")
+          .data(nodes, function(d){return d.key})
 
-        var texts = chart.datum(data).selectAll("text")
-          .data(nodes.filter(function(d) { return !d.values && d.count >= countMax*1/4}))
+        var texts = chart
+          .selectAll("text")
+          //.datum(data.filter(function(d) { return !d.values && d.count >= countMax*1/4})).selectAll("text")
+          .data(nodes.filter(function(d) { return !d.values && d.count >= countMax*1/4}), function(d){return d.key})
 
 /*
           node.enter().append("g")
@@ -89,8 +92,7 @@
 
 
         texts
-          .enter()
-          .append("text")
+          .enter().append("text")
           .attr("text-anchor", "middle")
           .attr("dy", "0.3em")
           .text(function(d) { return d.key})
@@ -116,7 +118,6 @@
 
 
         function wrap(text, w) {
-          console.log(w);
           text.each(function() {
             var text = d3.select(this),
               words = text.text().split(/\s+/).reverse(),

@@ -18,6 +18,41 @@ angular.module('geomediaApp')
         scope.format = d3.time.format("%d/%m/%y")
 
 
+        $rootScope.filteredMedias = [];
+        $rootScope.filteredCountries = [];
+
+
+        scope.filterMedia = function(m) {
+          if(m.active) {
+            m.active = false;
+            $rootScope.filteredMedias.push(m.key)
+          }
+          else {
+            m.active = true;
+            var index = $rootScope.filteredMedias.indexOf(m.key);    // <-- Not supported in <IE9
+            if (index !== -1) {
+              $rootScope.filteredMedias.splice(index, 1);
+            }
+          }
+          scope.filterByMedia($rootScope.filteredMedias);
+        }
+
+        scope.filterCountry = function(c) {
+          if(c.active) {
+            c.active = false;
+            $rootScope.filteredCountries.push(c.key)
+          }
+          else {
+            c.active = true;
+            var index = $rootScope.filteredCountries.indexOf(c.key);    // <-- Not supported in <IE9
+            if (index !== -1) {
+              $rootScope.filteredCountries.splice(index, 1);
+            }
+          }
+          scope.filterByCountry($rootScope.filteredCountries);
+        }
+
+
         //sorting medias and countries
         scope.sortMedias = "value"
         scope.sortCountries = "value"
@@ -39,6 +74,42 @@ angular.module('geomediaApp')
           }
           else return -obj.value
         };
+
+        scope.selectAllCountries = function() {
+          scope.countries.forEach(function(d){
+            d.active = true;
+          })
+          scope.filterByCountry([]);
+          $rootScope.filteredCountries = [];
+
+        }
+
+        scope.selectAllMedia = function() {
+          scope.medias.forEach(function(d){
+            d.active = true;
+          })
+          scope.filterByMedia([]);
+          $rootScope.filteredMedias = [];
+
+        }
+
+        scope.clearAllMedias = function() {
+          scope.medias.forEach(function(d){
+            d.active = false;
+          })
+          $rootScope.filteredMedias = _.map(scope.medias,'key');
+          scope.filterByMedia($rootScope.filteredMedias);
+
+        }
+
+        scope.clearAllCountries = function() {
+          scope.countries.forEach(function(d){
+            d.active = false;
+          })
+          $rootScope.filteredCountries = _.map(scope.countries,'key');
+          scope.filterByCountry($rootScope.filteredCountries);
+
+        }
 
 
         //to be used for elastic lists
@@ -86,7 +157,7 @@ angular.module('geomediaApp')
           }
         })
 
-
+        //reduce functions
         function reduceInitial() {
           return 0;
         }
@@ -103,21 +174,39 @@ angular.module('geomediaApp')
         //filter by time intervals
         scope.filterByTime = function(start, end) {
           $rootScope.bytime.filterRange([start.getTime(),end.getTime()]);
+          console.log(scope.countries[1])
           scope.$apply();
 
         }
 
-        //TODO implement this!
-        scope.filterByMedia = function(start, end) {
-          scope.bytime.filterRange([start.getTime(),end.getTime()]);
+        //filter by array of medias
+        scope.filterByMedia = function(filtmedias) {
+
+          if(filtmedias.length) {
+
+            $rootScope.bymedia.filterFunction(function (d) {
+              return filtmedias.indexOf(d) < 0;
+            })
+
+          }
+
+          else $rootScope.bymedia.filterAll();
         }
 
-        //TODO implement this!
-        scope.filterByCountry = function(start, end) {
-          scope.bytime.filterRange([start.getTime(),end.getTime()]);
+        //filter by array of countries
+        scope.filterByCountry = function(filtcountries) {
+
+          if(filtcountries.length) {
+            $rootScope.bycountry.filterFunction(function (d) {
+              return filtcountries.indexOf(d) < 0;
+            })
+          }
+          else $rootScope.bycountry.filterAll();
         }
 
 
+
+        //listener on dateChange
         scope.$on("dateChange", function(event, dates){
 
           $rootScope.startDate = dates[0];

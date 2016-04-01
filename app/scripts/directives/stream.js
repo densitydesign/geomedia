@@ -19,16 +19,37 @@ angular.module('geomediaApp')
 
         var stream = geomedia.stream()
           .chartWidth(chartWidth)
+        
 
-
-
-
-        $rootScope.$watch("[startDate,nedDate]",function(newValue,oldValue){
+        $rootScope.$watch("[startDate,endDate]",function(newValue,oldValue){
           if (newValue && newValue != oldValue) {
             $(element[0]).empty();
           scope.updateGraph();
           }
+        },true)
+
+        $rootScope.$watch('[gotData,filteredMedias.length]',function(newValue,oldValue){
+          if (newValue && newValue != oldValue) {
+            $(element[0]).empty();
+            scope.updateGraph();
+          }
+        },true)
+
+        $rootScope.$watch('[gotData,filteredCountries.length]',function(newValue,oldValue){
+          if (newValue && newValue != oldValue) {
+            $(element[0]).empty();
+            scope.updateGraph();
+          }
+        },true)
+
+
+        $rootScope.$watch('bytime',function(newValue,oldValue){
+          if (newValue && newValue != oldValue) {
+            $(element[0]).empty();
+            scope.updateGraph();
+          }
         })
+
 
 
 

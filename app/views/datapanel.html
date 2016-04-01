@@ -17,8 +17,8 @@
       </div>
 
       <div class="dropdown FilterGroup">
-        <button type="button" class="btn btn-default btn-sm">select all</button>
-        <button type="button" class="btn btn-default btn-sm">clear</button>
+        <button type="button" ng-click="selectAllMedia()" ng-class="{'actv':!$root.filteredMedias.length}" class="btn btn-default btn-sm">select all</button>
+        <button type="button" ng-click="clearAllMedias()" ng-class="{'actv':$root.filteredMedias.length == medias.length}" class="btn btn-default btn-sm">clear</button>
         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">filters <i class="fa fa-caret-down"></i></button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
           <h3>Filter by RSS type:</h3>
@@ -42,7 +42,7 @@
 
       <div class="ElasticList">
         <ul class="list-group">
-          <li ng-click="media.active = !media.active" ng-class="{'DeselectedItem':!media.active}" ng-repeat="media in medias | orderBy:orderMediaByFilteredKey" class="list-group-item">
+          <li ng-click="filterMedia(media)" ng-class="{'DeselectedItem':!media.active}" ng-repeat="media in medias | orderBy:orderMediaByFilteredKey" class="list-group-item">
             <span class="badge">{{media.value}}</span>
             {{media.key | medias}}
           </li>
@@ -68,8 +68,8 @@
       </div>
 
       <div class="FilterGroup">
-        <button type="button" class="btn btn-default btn-sm">select all</button>
-        <button type="button" class="btn btn-default btn-sm">clear</button>
+        <button type="button" ng-click="selectAllCountries()" ng-class="{'actv':!$root.filteredCountries.length}" class="btn btn-default btn-sm">select all</button>
+        <button type="button" ng-click="clearAllCountries()" ng-class="{'actv':$root.filteredCountries.length == countries.length}" class="btn btn-default btn-sm">clear</button>
 
       </div>
 
@@ -82,7 +82,7 @@
 
       <div class="ElasticList">
         <ul class="list-group">
-          <li ng-click="country.active = !country.active" ng-class="{'DeselectedItem':!country.active}" ng-repeat="country in countries | orderBy:orderCountryByFilteredKey" ng-if="$index > 0" class="list-group-item">
+          <li <div ng-if="country.key!=''" ng-click="filterCountry(country)" ng-class="{'DeselectedItem':!country.active}" ng-repeat="country in countries | orderBy:orderCountryByFilteredKey"  class="list-group-item">
             <span class="badge">{{country.value}}</span>
             {{country.key | countries}}
           </li>
