@@ -39,6 +39,11 @@ angular
         controller: 'CountriesCtrl',
         controllerAs: 'countries'
       })
+      .when('/time-media', {
+        templateUrl: 'views/time-media.html',
+        controller: 'TimeMediaCtrl',
+        controllerAs: 'timeMedia'
+      })
       .otherwise({
         redirectTo: '/'
       });

@@ -111,7 +111,6 @@ angular.module('geomediaApp')
 
         }
 
-
         //to be used for elastic lists
         var elasticScale1 = d3.scale.linear().range([20,100]);
 
@@ -203,8 +202,6 @@ angular.module('geomediaApp')
           }
           else $rootScope.bycountry.filterAll();
         }
-
-
 
         //listener on dateChange
         scope.$on("dateChange", function(event, dates){
