@@ -1,6 +1,6 @@
-<div ng-repeat="stream in streams">
+<div ng-repeat="stream in streams | limitTo:10">
 
   <div class="dropdown">{{stream.key | medias}}</div>
-  <time-media md="stream-key" ></time-media>
+  <time-media md="{{getIndex(stream.key)}}"></time-media>
 
 </div>
