@@ -15,7 +15,8 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    "ui.bootstrap"
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -43,6 +44,14 @@ angular
         templateUrl: 'views/time-media.html',
         controller: 'TimeMediaCtrl',
         controllerAs: 'timeMedia'
+      })
+      .when('/time-countries', {
+        templateUrl: 'views/time-countries.html',
+        controller: 'TimeCountriesCtrl'
+      })
+      .when('/media-countries', {
+        templateUrl: 'views/media-countries.html',
+        controller: 'MediaCountriesCtrl'
       })
       .otherwise({
         redirectTo: '/'

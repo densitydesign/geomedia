@@ -7,7 +7,7 @@
  * # datapanel
  */
 angular.module('geomediaApp')
-  .directive('datapanel', function (dataservice, $rootScope, $location,$filter) {
+  .directive('datapanel', function (dataservice, medias, $rootScope, $location,$filter) {
     return {
       templateUrl: 'views/datapanel.html',
       restrict: 'E',
@@ -16,7 +16,8 @@ angular.module('geomediaApp')
 
         //time parser and formatter
         scope.format = d3.time.format("%d/%m/%y")
-
+        scope.txtfiltMedia="";
+        scope.txtfiltCountries = "";
 
         $rootScope.filteredMedias = [];
         $rootScope.filteredCountries = [];
@@ -50,12 +51,12 @@ angular.module('geomediaApp')
             }
           }
           scope.filterByCountry($rootScope.filteredCountries);
-        }
+        };
 
 
         //sorting medias and countries
-        scope.sortMedias = "value"
-        scope.sortCountries = "value"
+        scope.sortMedias = "value";
+        scope.sortCountries = "value";
 
         //medias
         scope.orderMediaByFilteredKey = function(obj) {
@@ -76,7 +77,7 @@ angular.module('geomediaApp')
         };
 
         scope.selectAllCountries = function() {
-          scope.countries.forEach(function(d){
+          $rootScope.countries.forEach(function(d){
             d.active = true;
           })
           scope.filterByCountry([]);
@@ -85,7 +86,7 @@ angular.module('geomediaApp')
         }
 
         scope.selectAllMedia = function() {
-          scope.medias.forEach(function(d){
+          $rootScope.medias.forEach(function(d){
             d.active = true;
           })
           scope.filterByMedia([]);
@@ -94,19 +95,19 @@ angular.module('geomediaApp')
         }
 
         scope.clearAllMedias = function() {
-          scope.medias.forEach(function(d){
+          $rootScope.medias.forEach(function(d){
             d.active = false;
           })
-          $rootScope.filteredMedias = _.map(scope.medias,'key');
+          $rootScope.filteredMedias = _.map($rootScope.medias,'key');
           scope.filterByMedia($rootScope.filteredMedias);
 
         }
 
         scope.clearAllCountries = function() {
-          scope.countries.forEach(function(d){
+          $rootScope.countries.forEach(function(d){
             d.active = false;
           })
-          $rootScope.filteredCountries = _.map(scope.countries,'key');
+          $rootScope.filteredCountries = _.map($rootScope.countries,'key');
           scope.filterByCountry($rootScope.filteredCountries);
 
         }
@@ -141,17 +142,23 @@ angular.module('geomediaApp')
 
             //return initial list of medias
             scope.aggrByTime = $rootScope.bytime.group().reduce(reduceAdd, reduceRemove, reduceInitial).top(Infinity);
-            $rootScope.startDate = scope.aggrByTime[0].key
-            $rootScope.endDate = scope.aggrByTime[scope.aggrByTime.length-1].key
+
+
+            $rootScope.endDate = scope.format.parse($rootScope.bytime.top(1)[0].time);
+            $rootScope.startDate = scope.format.parse($rootScope.bytime.bottom(1)[0].time);
+            $rootScope.times = d3_time.timeDay.range($rootScope.startDate, $rootScope.endDate,7)
+
 
             //compute crossFilter groups
-            scope.medias = $rootScope.bymedia.group().reduce(reduceAdd, reduceRemove, reduceInitial).top(Infinity);
-            scope.medias.forEach(function(e,j){
+            $rootScope.medias = $rootScope.bymedia.group().reduce(reduceAdd, reduceRemove, reduceInitial).top(Infinity);
+            $rootScope.medias.forEach(function(e,j){
               e.active=true;
+                e.name = medias.getMediaName(e.key);
             })
-            scope.countries = $rootScope.bycountry.group().reduce(reduceAdd, reduceRemove, reduceInitial).top(Infinity);
-            scope.countries.forEach(function(e,j){
-              e.active=true;
+            $rootScope.countries = $rootScope.bycountry.group().reduce(reduceAdd, reduceRemove, reduceInitial).top(Infinity);
+            $rootScope.countries.forEach(function(e,j){
+              e.active = true;
+                e.name = $filter('countries')(e.key);
             })
           }
         })
@@ -173,7 +180,7 @@ angular.module('geomediaApp')
         //filter by time intervals
         scope.filterByTime = function(start, end) {
           $rootScope.bytime.filterRange([start.getTime(),end.getTime()]);
-          console.log(scope.countries[1])
+          console.log($rootScope.countries[1])
           scope.$apply();
 
         }
@@ -208,6 +215,7 @@ angular.module('geomediaApp')
 
           $rootScope.startDate = dates[0];
           $rootScope.endDate = dates[1];
+          $rootScope.times = d3_time.timeDay.range($rootScope.startDate, $rootScope.endDate,7)
 
           scope.filterByTime($rootScope.startDate, $rootScope.endDate);
 

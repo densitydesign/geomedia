@@ -2,31 +2,30 @@
 
 /**
  * @ngdoc function
- * @name geomediaApp.controller:TimeMediaCtrl
+ * @name geomediaApp.controller:TimeCountriesCtrl
  * @description
- * # TimeMediaCtrl
+ * # TimeCountriesCtrl
  * Controller of the geomediaApp
  */
 angular.module('geomediaApp')
-  .controller('TimeMediaCtrl', function ($scope,$rootScope, $window) {
-
-    $scope.streamName = "";
+  .controller('TimeCountriesCtrl', function ($scope, $rootScope, $window) {
+        $scope.streamName = "";
 
         $scope.streamheight = ($window.innerHeight *.9-100) / 10;
 
-    $scope.getIndex = function(k) {
-      return _.findIndex($scope.streams, function(d,i){return d.key == k})
-    }
+        $scope.getIndex = function(k) {
+            return _.findIndex($scope.streams, function(d,i){return d.key == k})
+        }
 
         $scope.getData = function(k) {
             var res = _.sortBy(_.find($scope.streams,function(d){return d.key == k}).values,function(d){return $scope.format.parse(d.key)});
             return res;
         }
-
-    if($rootScope.bytime) {
-        $scope.reformatData();
-    }
-
+/*
+        if($rootScope.bytime) {
+            $scope.reformatData();
+        }
+*/
         $rootScope.$watch("[startDate,endDate]",function(newValue,oldValue){
 
             if(newValue!=oldValue) {
@@ -49,7 +48,7 @@ angular.module('geomediaApp')
 
         $scope.reformatData = function() {
             $scope.streams = d3.nest()
-                .key(function(d) { return d.media; })
+                .key(function(d) { return d.TAG_geo; })
                 .key(function(d) { return d.time; })
                 .key(function(d) { return d.TAG_event; })
                 .rollup(function(leaves) { return leaves.length; })
@@ -57,12 +56,12 @@ angular.module('geomediaApp')
 
         };
 
-       $rootScope.$watch("medias",function(newVal){
-           if(newVal && !$scope.entries) {
-               $scope.entries = $rootScope.medias.slice(0,10);
-               $scope.choices = $rootScope.medias.map(function(d){return {key:d.key, label: d.name}});
-           }
-       })
+        $rootScope.$watch("countries",function(newVal){
+            if(newVal && !$scope.entries) {
+                $scope.entries = $rootScope.countries.filter(function(e){return e.key!=""}).slice(0,10);
+                $scope.choices = $rootScope.countries.map(function(d){return {key:d.key, label: d.name}});
+            }
+        })
 
 
         $scope.onSelect = function(item, model, label, event, index) {

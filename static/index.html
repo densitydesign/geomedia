@@ -302,5 +302,12 @@
     <script src="../js/vendor/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <script src="https://d3js.org/d3-time.v0.2.min.js"></script>
+    <script>
+        var start = new Date(2014,00,01)
+        var end = new Date(2015,05,01)
+        console.log(d3_time.timeDay.range(start, end,7));
+    </script>
   </body>
 </html>

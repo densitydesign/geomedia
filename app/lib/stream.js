@@ -10,7 +10,9 @@
 
     var chartWidth = 200,
       chartHeight = 600,
-      colors = ['#F8E9BA', '#E2BF29']
+      colors = ['#F8E9BA', '#E2BF29'],
+      showx = true,
+        prefix = ""
 
     function stream(selection){
       selection.each(function(data){
@@ -21,9 +23,6 @@
 
         var chart,
           gradient;
-
-
-        console.log(data);
 
         var format = d3.time.format("%d/%m/%y");
 
@@ -40,7 +39,7 @@
 
           gradient = chart.append("defs")
             .append("linearGradient")
-            .attr("id", "gradient")
+            .attr("id", prefix+"gradient")
             .attr("x1", "0%")
             .attr("y1", "50%")
             .attr("x2", "100%")
@@ -59,7 +58,7 @@
           chart.selectAll("stop").remove();
 
 
-          gradient = chart.select("#gradient");
+          gradient = chart.select("#"+prefix+"gradient");
         }
 
 
@@ -71,26 +70,28 @@
 
         data.forEach(function(d,i){
 
-          var vals = []
+            if(!('val' in d)) {
 
-          d.values.forEach(function(e,j){
-            maxes[e.key] = !(e.key in maxes) || maxes[e.key] < e.values ? e.values : maxes[e.key];
-            bigmax = e.values > bigmax ? e.values : bigmax;
-            vals.push(e.values)
-          })
+                var vals = []
+
+                d.values.forEach(function (e, j) {
+                    maxes[e.key] = !(e.key in maxes) || maxes[e.key] < e.values ? e.values : maxes[e.key];
+                    bigmax = e.values > bigmax ? e.values : bigmax;
+                    vals.push(e.values)
+                })
 
 
-          if(vals.length<2) vals.unshift(0);
-          vals.sort(
-            function(a,b) {
-              return a - b;
+                if (vals.length < 2) vals.unshift(0);
+                vals.sort(
+                    function (a, b) {
+                        return a - b;
+                    }
+                );
+
+                if (vals[0] / vals[1] > bigratio) bigratio = vals[0] / vals[1];
+                d.ratio = vals[0] / vals[1];
+                d.val = d3.max(vals);
             }
-          );
-
-          if(vals[0]/vals[1] > bigratio) bigratio = vals[0]/vals[1];
-          d.ratio = vals[0]/vals[1];
-          d.val = d3.max(vals);
-
         })
 
         colorScale.domain([0,bigratio]);
@@ -130,21 +131,24 @@
           .domain(timeDomain)
           .range([0, width]);
 
-        // X-axis.
-        var xAxis = d3.svg.axis()
-          .scale(x)
-          .orient("bottom")
-          .innerTickSize(-height)
-          .outerTickSize(0)
-          .tickFormat(d3.time.format("%b %y"))
 
-        var xAxis2 = d3.svg.axis()
-          .scale(x)
-          .orient("bottom")
-          .innerTickSize(-10)
-          .outerTickSize(0)
-          .ticks(d3.time.month,1)
-          .tickFormat("")
+
+            // X-axis.
+            var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom")
+                .innerTickSize(-height)
+                .outerTickSize(0)
+                .tickFormat(d3.time.format("%b %y"))
+
+            var xAxis2 = d3.svg.axis()
+                .scale(x)
+                .orient("bottom")
+                .innerTickSize(-10)
+                .outerTickSize(0)
+                .ticks(d3.time.month, 1)
+                .tickFormat("")
+
 
 
         var area = d3.svg.area()
@@ -154,24 +158,24 @@
           .y1(function(d) { return yStream(d.val/2) });
 
         var strm = chart.append("path")
-          .style("fill", "url(#gradient)")
+          .style("fill", "url(#"+prefix+"gradient)")
           .style("stroke", "none")
           .style("stroke-width", "none")
           .attr("d", function(d){ return area(d)});
 
 
+          if(showx) {
+              //vertical dynamic legend
+              var legend = chart.append("g")
+                  .attr('class', 'x axis xlines')
+                  .attr("transform", "translate(0," + (height / 2) + ")")
+                  .call(xAxis)
 
-        //vertical dynamic legend
-        var legend = chart.append("g")
-          .attr('class', 'x axis xlines')
-          .attr("transform","translate(0,"+(height/2)+")")
-          .call(xAxis)
-
-        var legend2 = chart.append("g")
-          .attr('class', 'x axis')
-          .attr("transform","translate(0,"+(height/2)+")")
-          .call(xAxis2)
-
+              var legend2 = chart.append("g")
+                  .attr('class', 'x axis')
+                  .attr("transform", "translate(0," + (height / 2) + ")")
+                  .call(xAxis2)
+          }
       }); //end selection
     } // end stream
 
@@ -188,6 +192,24 @@
       chartHeight = x;
       return stream;
     }
+
+      stream.colors = function(x){
+          if (!arguments.length) return colors;
+          colors = x;
+          return stream;
+      }
+
+      stream.showx = function(x){
+          if (!arguments.length) return showx;
+          showx = x;
+          return stream;
+      }
+
+      stream.prefix = function(x){
+          if (!arguments.length) return prefix;
+          prefix = x;
+          return stream;
+      }
 
     return stream;
 

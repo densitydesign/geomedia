@@ -1,6 +1,13 @@
-<div ng-repeat="stream in streams | limitTo:10">
+<div class="multistream">
+    <streamaxes></streamaxes>
+<div class="stream-item" ng-repeat="stream in entries track by $index | limitTo:10 ">
 
-  <div class="dropdown">{{stream.key | medias}}</div>
-  <time-media md="{{getIndex(stream.key)}}"></time-media>
+  <div ng-click="editorEnabled=true" ng-hide="editorEnabled" ng-style="{'margin-top':streamheight/10}" class="stream-dropdown"><i class="fa fa-caret-down"></i> {{stream.key | medias}}</div>
+    <div class="stream-dropdown type" ng-show="editorEnabled">
+        <input type="text" ng-model="streamName" typeahead-editable="false" uib-typeahead="m as m.label for m in choices | filter:$viewValue | limitTo:10"  typeahead-on-select="editorEnabled=false; onSelect($item, $model, $label, $event, $index)"/>
+    </div>
+  <streamsingle class="streamsingle" streamcolors="['#EFC9CC', '#EF4141']" streamheight="{{streamheight}}" streamindex ="{{stream.key}}" streamdata="getData(k)"></streamsingle>
+    <div class="clearfix"></div>
 
+</div>
 </div>

@@ -569,10 +569,28 @@ stream, pack, network{
   width:100%;
   margin-top:100px;
 }
+
+.streamsingle{
+    display:block;
+    width:calc(100% - 200px);
+    float:left;
+}
+
 stream .x.axis path{
   opacity:0;
 }
+.stream-item{
+    width:100%;
+    clear:both;
+}
 
+.stream-dropdown{
+    width:200px;
+    float:left;
+    font-family: "Source Serif Pro";
+    color:#4a4a4a;
+    text-transform: capitalize;
+}
 .x.axis line{
   stroke:black;
   opacity:0.1;
@@ -594,4 +612,16 @@ svg .node text {
 
 #graph-container{
   height:600px;
+}
+.multistream{
+    width:100%;
+    height:auto;
+    margin-top:80px;
+}
+streamaxes{
+    position:absolute;
+    top:0;
+    left:200px;
+    width:calc(100% - 200px);
+
 }

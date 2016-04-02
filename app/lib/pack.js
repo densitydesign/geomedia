@@ -82,6 +82,8 @@
 
         circs.enter().append("circle")
           .style("stroke", function(d) { return d.parent ? d.values ? "#CACACA" : 'none' : 'none' })
+            .style("fill", function(d) { return d.parent ? d.values ? "#F9F9F9" : "#F9F9F9" : "none"; })
+            .attr("r", 1)
 
         circs
           .transition().duration(500)
@@ -102,11 +104,10 @@
           .attr("x", function(d){return d.x})
           .attr("y", function(d){return d.y})
 
-
-
-
         circs
           .exit()
+            .transition().duration(500)
+            .attr("r", 0)
           .remove();
 
         texts
