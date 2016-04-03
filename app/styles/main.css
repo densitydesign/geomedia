@@ -623,23 +623,23 @@ svg .node text {
 #graph-container{
   height:600px;
 }
-.multistream, .multipack{
+.multistream, .multipack, .multimap{
     width:100%;
     height:auto;
     margin-top:80px;
 }
 
-.multipack{
+.multipack, .multimap{
     margin-top:50px;
     font-family:"Source Serif Pro";
     color:#4A4A4A;
 }
 
-.pack-item{
+.pack-item, .map-item{
     width:50%;
     float:left;
 }
-.packsingle{
+.packsingle, .mapsingle{
     display:block;
     width:100%;
 }
@@ -652,7 +652,7 @@ streamaxes{
 
 }
 
-.media-time{
+.media-time, .countries-time{
     width:100%;
     height:100%;
     overflow:hidden;

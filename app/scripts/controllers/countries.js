@@ -14,6 +14,7 @@ angular.module('geomediaApp')
         $rootScope.$watch("[startDate,endDate]",function(newValue){
             if(newValue[0] && newValue[1]) {
                 $scope.computeData()
+                //console.log(JSON.stringify($scope.data));
                 $scope.$broadcast("countries_update");
             }
         },true);
@@ -21,6 +22,7 @@ angular.module('geomediaApp')
         $rootScope.$watch('[gotData,filteredMedias.length]',function(newValue,oldValue){
             if(newValue!=oldValue) {
                 $scope.computeData()
+                //console.log(JSON.stringify($scope.data));
                 $scope.$broadcast("countries_update");
             }
         },true);
@@ -28,6 +30,7 @@ angular.module('geomediaApp')
         $rootScope.$watch('[gotData,filteredCountries.length]',function(newValue,oldValue){
             if(newValue!=oldValue) {
                 $scope.computeData()
+                //console.log(JSON.stringify($scope.data));
                 $scope.$broadcast("countries_update");
             }
         },true);
@@ -44,22 +47,24 @@ angular.module('geomediaApp')
                     d.label = $filter('countries')(d.key);
 
                     var coords = geocoordsservice.getCoords(d.key);
-                    d.x = coords.lon;
-                    d.x0 = coords.lon;
-                    d.y = coords.lat;
-                    d.y0 = coords.lat;
+                    console.log(coords);
+                    d['lon'] = coords.lon;
+                    d['lat'] = coords.lat;
+
 
                     d.values.forEach(function (e, j) {
                         e.key = e.key==""? e.key="none" : e.key;
                         d[e.key] = e.values;
                         delete e['values'];
                     })
+
                     delete d['values'];
                     if(!($rootScope.keyword in d)) d[$rootScope.keyword] = 0;
                     return d;
-
                 })
 
+
         }
+
     
   });

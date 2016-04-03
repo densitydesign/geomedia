@@ -13,7 +13,6 @@ angular.module('geomediaApp')
             restrict: 'E',
             link: function postLink(scope, element, attrs) {
 
-                var init_data = dorlingservice.getData();
 
                 var chart = d3.select(element[0]);
                 var chartWidth = parseInt(chart.style("width").replace("px", ""));
@@ -23,19 +22,11 @@ angular.module('geomediaApp')
 
                 var projection = d3.geo.mercator()
                     .scale((chartWidth + 1) / 2 / Math.PI)
-                    .translate([chartWidth / 2, chartHeight / 2 + 50]);
-//             .scale((width + 1) / 2 / Math.PI)
-// .translate([width / 2, height / 2])
+                    .translate([chartWidth / 2 - chartWidth*0.07, (chartHeight / 2) + chartHeight *.07 ]);
 
                 var svg = chart.append("svg")
                     .attr("width", chartWidth)
                     .attr("height", chartHeight)
-
-           /*     var path = d3.geo.path()
-                    .projection(projection);
-
-
-*/
 
 
                 var colorScale = d3.scale.linear().range(["#CAD9E3","#427A99"]);
@@ -59,26 +50,34 @@ angular.module('geomediaApp')
 
                     var radius = d3.scale.sqrt()
                         .domain([0, max])
-                        .range([0, 30]);
+                        .range([1, 30]);
+
+                    var init_data = _.cloneDeep(dorlingservice.getData());
+
+                    init_data.forEach(function (d) {
+
+                        var crds = projection([d.lon, d.lat]);
+                        d.x = crds[0],
+                            d.x0 = crds[0]
+                        d.y = crds[1]
+                        d.y0 = crds[1]
 
 
-
-                    scope.data.forEach(function (d) {
-
-
-
-                        d.r = radius(d.none + d[$rootScope.keyword]);
-
+                        var found = _.find(scope.data, function(e){ return d.key == e.key})
+                        if(found) {
+                            d.r = radius(found.none + found[$rootScope.keyword]);
+                            d.color = colorScale(found[$rootScope.keyword] / (found.none + found[$rootScope.keyword]));
+                        }
                     });
 
 
                     force
-                        .nodes(scope.data)
+                        .nodes(init_data)
                         .on("tick", tick)
                         .start();
 
                     var node = svg.selectAll("circle")
-                        .data(scope.data, function (d) {
+                        .data(init_data, function (d) {
                             return d.key
                         });
 
@@ -90,22 +89,23 @@ angular.module('geomediaApp')
                         })
                         .attr("cy", function (d) {
                             return d.y;
-                        });
+                        })
+                    .attr("r",0);
 
                     node
                         .transition()
                         .duration(500)
-                        .style("fill", function(d){return colorScale(d[$rootScope.keyword] / (d.none + d[$rootScope.keyword]))})
+                        .style("fill", function(d){return 'color' in d ? d.color : colorScale(0)})
                         .attr("r", function (d) {
-                            return d.r;
+                            return 'r' in d ? d.r : radius(0);
                         });
                 }
 
                 function tick(e) {
-                    d3.selectAll("circle").each(gravity(e.alpha * .1))
+                    chart.selectAll("circle").each(gravity(e.alpha * .1))
                         .each(collide(.5))
 
-                    d3.selectAll("circle")
+                    chart.selectAll("circle")
                         .attr("cx", function (d) {
                             return d.x;
                         })
@@ -117,6 +117,7 @@ angular.module('geomediaApp')
 
                 function gravity(k) {
                     return function (d) {
+
                         d.x += (d.x0 - d.x) * k;
                         d.y += (d.y0 - d.y) * k;
                     };
@@ -151,6 +152,7 @@ angular.module('geomediaApp')
 
                 scope.$on("countries_update", function() {
                     scope.drawDorling();
+
                 })
 
 
