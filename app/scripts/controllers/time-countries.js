@@ -54,6 +54,8 @@ angular.module('geomediaApp')
                 .rollup(function(leaves) { return leaves.length; })
                 .entries($rootScope.bymedia.bottom(Infinity))
 
+
+
         };
 
         $rootScope.$watch("countries",function(newVal){

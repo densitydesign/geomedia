@@ -1,1 +1,12 @@
-<p>This is the media-countries view.</p>
+<div class="multipack">
+    <div class="pack-item" ng-repeat="pack in entries track by $index | limitTo:4">
+
+        <div ng-click="editorEnabled=true" ng-hide="editorEnabled" ng-style="{'margin-top':packheight/20}" class="pack-dropdown"><i class="fa fa-caret-down"></i> {{pack.key | countries}}</div>
+        <div class="pack-dropdown type" ng-show="editorEnabled">
+            <input type="text" ng-model="packName" typeahead-editable="false" uib-typeahead="m as m.label for m in choices | filter:$viewValue | limitTo:10"  typeahead-on-select="editorEnabled=false; onSelect($item, $model, $label, $event, $index)"/>
+        </div>
+        <packsingle class="packsingle"  packheight="{{packheight}}" packindex ="{{pack.key}}" packdata="getData(k)"></packsingle>
+        <div class="clearfix"></div>
+
+    </div>
+</div>

@@ -10,7 +10,8 @@
 
     var chartWidth = 200,
       chartHeight = 700,
-      colors = ['#EFC9CC', '#EF4141']
+      colors = ['#EFC9CC', '#EF4141'],
+        pad = 20;
 
     function pack(selection){
       selection.each(function(data){
@@ -47,7 +48,7 @@
           .size([width - 4, height - 4])
           .children(function(d){return d.values})
           .value(function(d) { return d.count})
-          .padding(20);
+          .padding(pad);
 
 
         var ratioMax = d3.max(data,function(d){
@@ -68,8 +69,9 @@
 
         var texts = chart
           .selectAll("text")
-          //.datum(data.filter(function(d) { return !d.values && d.count >= countMax*1/4})).selectAll("text")
-          .data(nodes.filter(function(d) { return !d.values && d.count >= countMax*1/4}), function(d){return d.key})
+
+         // .data(nodes.filter(function(d) { return !d.values && d.count >= countMax*1/4}), function(d){return d.key})
+            .data(nodes.filter(function(d) { return !d.values && d.r >=20}), function(d){return d.key})
 
 /*
           node.enter().append("g")
@@ -96,13 +98,16 @@
         texts
           .enter().append("text")
           .attr("text-anchor", "middle")
+            .style("font-size",10)
           .attr("dy", "0.3em")
+            .style('opacity',0)
           .text(function(d) { return d.key})
 
           texts
           .transition().duration(500)
           .attr("x", function(d){return d.x})
           .attr("y", function(d){return d.y})
+              .style('opacity',1)
 
         circs
           .exit()
@@ -164,6 +169,12 @@
       chartHeight = x;
       return pack;
     }
+
+      pack.pad = function(x){
+          if (!arguments.length) return pad;
+          pad = x;
+          return pack;
+      }
 
     return pack;
   }

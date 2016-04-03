@@ -613,11 +613,27 @@ svg .node text {
 #graph-container{
   height:600px;
 }
-.multistream{
+.multistream, .multipack{
     width:100%;
     height:auto;
     margin-top:80px;
 }
+
+.multipack{
+    margin-top:50px;
+    font-family:"Source Serif Pro";
+    color:#4A4A4A;
+}
+
+.pack-item{
+    width:50%;
+    float:left;
+}
+.packsingle{
+    display:block;
+    width:100%;
+}
+
 streamaxes{
     position:absolute;
     top:0;

@@ -29,7 +29,7 @@ angular.module('geomediaApp')
             .rollup(function(leaves) {
               var obj = {};
               obj.count = leaves.length;
-              obj.ratio = leaves.filter(function(d){return d.TAG_event == "Ebola"}).length / leaves.filter(function(d){return d.TAG_event == ""}).length;
+              obj.ratio = leaves.filter(function(d){return d.TAG_event == "Ebola"}).length / leaves.length;
               return obj; })
             .entries($rootScope.bytime.bottom(Infinity))
             .map(function(d){
@@ -48,8 +48,8 @@ angular.module('geomediaApp')
 
         }
 
-        $rootScope.$watch("[gotData,startDate,endDate]",function(newValue,oldValue){
-          if (newValue && newValue != oldValue) {
+         $rootScope.$watch("[gotData,startDate,endDate]",function(newValue,oldValue){
+         if (newValue && newValue != oldValue) {
            scope.drawPack();
           }
         }, true)
