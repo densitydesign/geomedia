@@ -19,50 +19,15 @@ angular.module('geomediaApp')
 
         var stream = geomedia.stream()
           .chartWidth(chartWidth)
-        
 
-        $rootScope.$watch("[startDate,endDate]",function(newValue,oldValue){
-          if (newValue && newValue != oldValue) {
-            $(element[0]).empty();
-          scope.updateGraph();
-          }
-        },true)
-
-        $rootScope.$watch('[gotData,filteredMedias.length]',function(newValue,oldValue){
-          if (newValue && newValue != oldValue) {
-            $(element[0]).empty();
-            scope.updateGraph();
-          }
-        },true)
-
-        $rootScope.$watch('[gotData,filteredCountries.length]',function(newValue,oldValue){
-          if (newValue && newValue != oldValue) {
-            $(element[0]).empty();
-            scope.updateGraph();
-          }
-        },true)
-
-
-        $rootScope.$watch('bytime',function(newValue,oldValue){
-          if (newValue && newValue != oldValue) {
-            $(element[0]).empty();
-            scope.updateGraph();
-          }
-        })
-
-
-
+          scope.$on("time_update", function() {
+              scope.updateGraph();
+          })
 
         scope.updateGraph = function() {
 
-          var nest = d3.nest()
-            .key(function(d) { return d.time; })
-            .key(function(d) { return d.TAG_event; })
-            .rollup(function(leaves) { return leaves.length; })
-            .entries($rootScope.bytime.bottom(Infinity))
-
-
-          chart.datum(nest).call(stream)
+            $(element[0]).empty();
+          chart.datum(scope.data).call(stream)
         }
 
       }

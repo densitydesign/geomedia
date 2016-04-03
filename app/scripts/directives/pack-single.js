@@ -17,31 +17,10 @@ angular.module('geomediaApp')
         },
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
+
+
           var chart = d3.select(element[0]);
 
-
-          var pack = geomedia.pack()
-              .chartHeight(scope.packheight)
-              .pad(3);
-
-
-          $timeout(function() {
-              var chartWidth = parseInt(chart.style("width").replace("px",""));
-              pack.chartWidth(chartWidth)
-              scope.drawPack();
-             // scope.drawPack();
-          })
-
-
-          scope.$on("media_countries_refresh",function(){
-              scope.drawPack();
-          })
-
-          scope.$watch("packindex",function(newValue, oldValue){
-              if(newValue != oldValue) {
-                  scope.drawPack();
-              }
-          })
 
           scope.drawPack = function() {
               try {
@@ -60,6 +39,27 @@ angular.module('geomediaApp')
 
               chart.datum(scope.data).call(pack);
           }
+
+
+          var pack = geomedia.pack()
+              .chartHeight(scope.packheight)
+              .pad(3);
+
+          scope.$on("media_countries_refresh",function(){
+              var chartWidth = parseInt(chart.style("width").replace("px",""));
+              pack.chartWidth(chartWidth);
+              console.log("udpate please")
+              scope.drawPack();
+
+          })
+
+          scope.$watch("packindex",function(newValue, oldValue){
+              if(newValue != oldValue) {
+                  scope.drawPack();
+              }
+          })
+
+
 
 
 

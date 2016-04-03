@@ -258,6 +258,7 @@ angular.module('geomediaApp')
       "VUT":"Vanuatu",
       "WLF":"Wallis and Futuna",
       "WSM":"Samoa",
+      "XK":"Kosovo",
       "YEM":"Yemen",
       "ZAF":"South Africa",
       "ZMB":"Zambia",
@@ -267,6 +268,6 @@ angular.module('geomediaApp')
 
 
     return function (input) {
-      return allcountries[input];
+      return allcountries[input.trim()];
     };
   });

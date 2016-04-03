@@ -43,15 +43,15 @@
 
 <topbar ng-show="$root.gotdata"></topbar>
 
-<div class="container-fluid">
-  <div class="row">
+<div class="container-fluid fullheight">
+  <div class="row fullheight">
 
 
   <datapanel ng-show="$root.gotdata"></datapanel>
 
 
 
-  <div ng-show="$root.gotdata" class="col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-8 col-lg-offset-4 main" ng-view=""></div>
+  <div ng-show="$root.gotdata" class="col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-8 col-lg-offset-4 main fullheight" ng-view=""></div>
   </div>
 </div>
 
@@ -88,6 +88,7 @@
 <!-- endbower -->
 <!-- endbuild -->
 <script src="https://d3js.org/d3-time.v0.2.min.js"></script>
+<script src="http://d3js.org/d3.geo.projection.v0.min.js" charset="utf-8"></script>
 
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
@@ -119,6 +120,10 @@
 <script src="scripts/controllers/time-countries.js"></script>
 <script src="scripts/controllers/media-countries.js"></script>
 <script src="scripts/directives/pack-single.js"></script>
+<script src="scripts/controllers/media-time.js"></script>
+<script src="scripts/services/geocoordsservice.js"></script>
+<script src="scripts/directives/dorling.js"></script>
+<script src="scripts/services/dorlingservice.js"></script>
 <!-- endbuild -->
 </body>
 </html>

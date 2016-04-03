@@ -22,7 +22,7 @@ angular.module('geomediaApp')
 
 
         scope.drawPack = function() {
-
+/*
           var nest = d3.nest()
             .key(function(d) { return medias.getLanguage(d.media.substring(0,2)); })
             .key(function(d) { return medias.getMediaName(d.media); })
@@ -43,11 +43,15 @@ angular.module('geomediaApp')
               return d;
 
             })
-
-          chart.datum(nest).call(pack)
+*/
+          chart.datum(scope.currData).call(pack)
 
         }
 
+          scope.$on("media_refresh",function() {
+              scope.drawPack();
+          });
+/*
          $rootScope.$watch("[gotData,startDate,endDate]",function(newValue,oldValue){
          if (newValue && newValue != oldValue) {
            scope.drawPack();
@@ -66,6 +70,11 @@ angular.module('geomediaApp')
             scope.drawPack();
           }
         },true)
+*/
+          //listen for event on media_time controller
+        //  scope.$on('')
+
+
       }
     };
   });

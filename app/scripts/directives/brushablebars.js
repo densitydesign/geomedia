@@ -15,34 +15,44 @@ angular.module('geomediaApp')
         var chart = d3.select(element[0]);
         var chartWidth = parseInt(chart.style("width").replace("px",""));
 
+          var startDate, endDate;
 
+
+          var timeline = geomedia.timeline()
+              .chartWidth(chartWidth)
+              .on("brushed", function(d) {
+                  startDate = d[0];
+                  endDate = d[1];
+                  $rootScope.$broadcast("dateChange",d);
+                  if(!scope.$$phase) {
+                      scope.$apply()
+                  }
+              })
 
         scope.$watch("aggrByTime",function(newVal, oldVal){
           if(newVal) {
 
-            var startDate = scope.aggrByTime[0].key
-            var endDate = scope.aggrByTime[ scope.aggrByTime.length - 1 ].key
+           startDate = scope.aggrByTime[0].key;
+           endDate = scope.aggrByTime[ scope.aggrByTime.length - 1 ].key;
 
-            var timeline = geomedia.timeline()
-              .chartWidth(chartWidth)
-              .extent([startDate, endDate])
+           timeline.extent([startDate, endDate]);
 
-              .on("brushed", function(d){
-                startDate = d[0];
-                endDate = d[1];
 
-               // $location.search('startDate', scope.format(startDate));
-               // $location.search('endDate', scope.format(endDate));
-                $rootScope.$broadcast("dateChange",d);
-                if(!scope.$$phase) {
-                  scope.$apply()
-                }
-              })
-
-            chart.datum(scope.aggrByTime).call(timeline)
-
+           chart.datum(scope.aggrByTime).call(timeline)
           }
         })
+
+          $rootScope.$watch('[gotData,filteredMedias.length]',function(newValue,oldValue){
+              if(newValue!=oldValue) {
+                  chart.datum(scope.aggrByTime).call(timeline)
+              }
+          },true)
+
+          $rootScope.$watch('[gotData,filteredCountries.length]',function(newValue,oldValue){
+              if(newValue!=oldValue) {
+                  chart.datum(scope.aggrByTime).call(timeline)
+              }
+          },true)
 
 
 

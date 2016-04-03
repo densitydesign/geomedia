@@ -69,4 +69,8 @@ angular.module('geomediaApp')
         $scope.onSelect = function(item, model, label, event, index) {
             $scope.entries[index] = $scope.streams.filter(function(d){return d.key ==item.key})[0];
         }
+
+        if($rootScope.bytime) {
+            $scope.reformatData();
+        }
   });

@@ -8,7 +8,7 @@
  * Controller of the geomediaApp
  */
 angular.module('geomediaApp')
-  .controller('MediaCountriesCtrl', function ($scope, $rootScope, medias, $window) {
+  .controller('MediaCountriesCtrl', function ($scope, $rootScope, medias, $timeout, $window) {
 
 
         $scope.packName = "";
@@ -36,8 +36,6 @@ angular.module('geomediaApp')
                     return obj; })
 
                 .entries($rootScope.bymedia.bottom(Infinity))
-
-            console.log("send signal");
             $rootScope.$broadcast("media_countries_refresh");
         };
 
@@ -64,6 +62,9 @@ angular.module('geomediaApp')
             if(newVal && !$scope.entries) {
                 $scope.entries = $rootScope.countries.filter(function(e){return e.key!=""}).slice(0,4);
                 $scope.choices = $rootScope.countries.map(function(d){return {key:d.key, label: d.name}});
+                $timeout(function(){
+                    $scope.reformatData();
+                })
             }
         })
 
@@ -71,6 +72,8 @@ angular.module('geomediaApp')
         $scope.onSelect = function(item, model, label, event, index) {
             $scope.entries[index] = $scope.packs.filter(function(d){return d.key ==item.key})[0];
         }
+
+
 
 
   });

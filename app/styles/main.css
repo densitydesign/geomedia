@@ -1,10 +1,20 @@
 
 /* Move down content because we have a fixed navbar that is 80px tall */
+html{
+    height:100%;
+}
 body {
   padding-top: 80px;
+    height:100%;
 }
 
+.main{
+    padding:0 !important;
+}
 
+.fullheight{
+    height:100%;
+}
 /* Assets */
 
 
@@ -640,4 +650,52 @@ streamaxes{
     left:200px;
     width:calc(100% - 200px);
 
+}
+
+.media-time{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    position:relative;
+
+}
+
+
+.timebar{
+    height:90px;
+    background-color:#f9f9f9;
+    border-top: solid 1px #E3E3E3;
+    position:absolute;
+    bottom:0;
+    width:100%;
+}
+
+
+.timectrl{
+    width:90px;
+    height:100%;
+    float:left;
+    font-size:45px;
+    padding-top:16px;
+    text-align: center;
+    border-right: 1px solid #e3e3e3;
+    color: #bdbdbd;
+}
+
+.timectrl i {
+    cursor:pointer;
+}
+
+.time-line{
+    width:calc(100% - 90px);
+    float:left;
+    height:100%;
+}
+.time-line rect {
+    cursor:pointer;
+}
+dorling{
+    display:block;
+    width:100%;
+    height:100%;
 }

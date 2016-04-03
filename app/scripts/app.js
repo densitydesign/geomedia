@@ -53,6 +53,10 @@ angular
         templateUrl: 'views/media-countries.html',
         controller: 'MediaCountriesCtrl'
       })
+      .when('/media-time', {
+        templateUrl: 'views/media-time.html',
+        controller: 'MediaTimeCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
