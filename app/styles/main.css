@@ -156,10 +156,11 @@ body {
 }
 
 .TimeButton:hover,
-.TimeButton:focus
+.TimeButton:focus, .TimeButton.actv
 {	background-color: #E2BF29 !important;
   border: 1px solid #E2BF29 !important;
   outline: none !important;
+    color:white !important;
   box-shadow: none;
 
 }
@@ -178,7 +179,7 @@ body {
 
 .CountriesButton:hover,
 .CountriesButton:focus,
-.CountriesPanel .actv
+.CountriesPanel .actv, .CountriesButton.actv
 {
   background-color: #427A99 !important;
   border: 1px solid #427A99 !important;
@@ -200,7 +201,7 @@ body {
 }
 
 .MediaButton:hover,
-.MediaButton:focus, .MediaPanel .actv
+.MediaButton:focus, .MediaPanel .actv, .MediaButton.actv
 {
   background-color: #EF4141 !important;
   border: 1px solid #EF4141 !important;

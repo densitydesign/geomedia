@@ -53,6 +53,7 @@ angular.module('geomediaApp')
 
                         delete d['values'];
                         if(!($rootScope.keyword in d)) d[$rootScope.keyword] = 0;
+                        if(!('none' in d)) d['none'] = 0;
 
                         })
                     return a;

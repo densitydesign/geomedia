@@ -26,11 +26,11 @@
         <div class="row">
           <div class="col-sm-4">
             <div class="row">
-              <div class="col-sm-12 FirstDimension ClearPadding"> <button type="button" ng-click="go('time')" class="btn btn-primary btn-lg DimensionButton TimeButton">Time</button>
+              <div class="col-sm-12 FirstDimension ClearPadding"> <button ng-class="{'actv':locStartsWith('time')}" type="button" ng-click="go('time')" class="btn btn-primary btn-lg DimensionButton TimeButton">Time</button>
               </div>
-              <div class="col-sm-6 SecondDimension ClearPadding"><button type="button" class="btn btn-primary DimensionButton MediaButton">+Media</button>
+              <div class="col-sm-6 SecondDimension ClearPadding"><button ng-class="{'actv':locEqualTo('time-media')}" type="button" ng-click="go('time-media')" class="btn btn-primary DimensionButton MediaButton">+Media</button>
               </div>
-              <div class="col-sm-6 SecondDimension ClearPadding"><button type="button" class="btn btn-primary DimensionButton CountriesButton">+Countries</button>
+              <div class="col-sm-6 SecondDimension ClearPadding"><button ng-class="{'actv':locEqualTo('time-countries')}" type="button" ng-click="go('time-countries')" class="btn btn-primary DimensionButton CountriesButton">+Countries</button>
               </div>
             </div>
           </div>
@@ -38,22 +38,22 @@
 
           <div class="col-sm-4">
             <div class="row">
-              <div class="col-sm-12 FirstDimension ClearPadding"> <button type="button" ng-click="go('media')"  class="btn btn-primary btn-lg DimensionButton MediaButton">Media</button>
+              <div class="col-sm-12 FirstDimension ClearPadding"> <button ng-class="{'actv':locStartsWith('media')}" type="button" ng-click="go('media')"  class="btn btn-primary btn-lg DimensionButton MediaButton">Media</button>
               </div>
-              <div class="col-sm-6 SecondDimension ClearPadding"><button type="button" class="btn btn-primary DimensionButton TimeButton">+Time</button>
+              <div class="col-sm-6 SecondDimension ClearPadding"><button ng-class="{'actv':locEqualTo('media-time')}" type="button" ng-click="go('media-time')"  class="btn btn-primary DimensionButton TimeButton">+Time</button>
               </div>
-              <div class="col-sm-6 SecondDimension ClearPadding"><button type="button" class="btn btn-primary DimensionButton CountriesButton">+Countries</button>
+              <div class="col-sm-6 SecondDimension ClearPadding"><button ng-class="{'actv':locEqualTo('media-countries')}" type="button" ng-click="go('media-countries')"  class="btn btn-primary DimensionButton CountriesButton">+Countries</button>
               </div>
             </div>
           </div>
 
           <div class="col-sm-4">
             <div class="row">
-              <div class="col-sm-12 FirstDimension ClearPadding"> <button type="button"  ng-click="go('countries')" class="btn btn-primary btn-lg DimensionButton CountriesButton">Countries</button>
+              <div class="col-sm-12 FirstDimension ClearPadding"> <button ng-class="{'actv':locStartsWith('countries')}" type="button"  ng-click="go('countries')" class="btn btn-primary btn-lg DimensionButton CountriesButton">Countries</button>
               </div>
-              <div class="col-sm-6 SecondDimension ClearPadding"><button type="button" class="btn btn-primary DimensionButton TimeButton">+Time</button>
+              <div class="col-sm-6 SecondDimension ClearPadding"><button ng-class="{'actv':locEqualTo('countries-time')}" type="button" ng-click="go('countries-time')" class="btn btn-primary DimensionButton TimeButton">+Time</button>
               </div>
-              <div class="col-sm-6 SecondDimension ClearPadding"><button type="button" class="btn btn-primary DimensionButton MediaButton">+Media</button>
+              <div class="col-sm-6 SecondDimension ClearPadding"><button ng-class="{'actv':locEqualTo('countries-media')}" type="button" ng-click="go('countries-media')" class="btn btn-primary DimensionButton MediaButton">+Media</button>
               </div>
             </div>
           </div>

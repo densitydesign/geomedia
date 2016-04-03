@@ -66,6 +66,7 @@ angular.module('geomediaApp')
                         var found = _.find(scope.data, function(e){ return d.key == e.key})
                         if(found) {
                             d.r = radius(found.none + found[$rootScope.keyword]);
+                            console.log(found, d.r);
                             d.color = colorScale(found[$rootScope.keyword] / (found.none + found[$rootScope.keyword]));
                         }
                     });

@@ -18,6 +18,15 @@ angular.module('geomediaApp')
           $location.path(there);
         }
 
+          scope.locStartsWith = function(x) {
+              console.log($location.path(), x)
+              return $location.path().indexOf("/"+x)==0;
+          }
+
+          scope.locEqualTo = function(x) {
+              return $location.path()== "/"+x;
+          }
+
         $rootScope.$watch("gotdata", function(newVal, oldVal){
           if(newVal) {
             scope.data = dataservice.getData()
