@@ -47,7 +47,7 @@ angular.module('geomediaApp')
                     d.label = $filter('countries')(d.key);
 
                     var coords = geocoordsservice.getCoords(d.key);
-                    console.log(coords);
+                    //console.log(coords);
                     d['lon'] = coords.lon;
                     d['lat'] = coords.lat;
 

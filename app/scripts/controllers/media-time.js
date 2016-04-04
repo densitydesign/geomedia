@@ -213,7 +213,7 @@ angular.module('geomediaApp')
                 var ind = 0;
 
                 posScale.range().every(function(d,i){
-                    console.log(xpos,d,dist);
+                    //console.log(xpos,d,dist);
                     if(Math.abs(d-xpos) > dist) {
                         ind = i;
                         return false;

@@ -155,6 +155,8 @@ angular.module('geomediaApp')
               e.active=true;
                 e.name = medias.getMediaName(e.key);
             })
+
+              //console.log(_.map($rootScope.medias,"key"));
             $rootScope.countries = $rootScope.bycountry.group().reduce(reduceAdd, reduceRemove, reduceInitial).top(Infinity);
             $rootScope.countries.forEach(function(e,j){
               e.active = true;
@@ -162,6 +164,41 @@ angular.module('geomediaApp')
             })
           }
         })
+
+          scope.filterByLanguage = function(ln) {
+              var langMedias = $rootScope.medias.filter(function(d){
+                  return d.key.indexOf(ln)==0;
+              })
+
+              langMedias.forEach(function(c){
+
+                  if(c.active) {
+                      c.active = false;
+                      $rootScope.filteredMedias
+                          .push(c.key)
+                  }
+
+              })
+              scope.filterByMedia($rootScope.filteredMedias);
+          }
+
+
+          scope.filterByRSS = function(rss) {
+              var rssMedias = $rootScope.medias.filter(function(d){
+                  return medias.getMediaType(d.key)  == rss;
+              })
+
+              rssMedias.forEach(function(c){
+
+                  if(c.active) {
+                      c.active = false;
+                      $rootScope.filteredMedias
+                          .push(c.key)
+                  }
+
+              })
+              scope.filterByMedia($rootScope.filteredMedias);
+          }
 
         //reduce functions
         function reduceInitial() {
@@ -180,7 +217,7 @@ angular.module('geomediaApp')
         //filter by time intervals
         scope.filterByTime = function(start, end) {
           $rootScope.bytime.filterRange([start.getTime(),end.getTime()]);
-          console.log($rootScope.countries[1])
+          //console.log($rootScope.countries[1])
           scope.$apply();
 
         }

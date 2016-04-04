@@ -59,7 +59,7 @@ angular.module('geomediaApp')
                     return a;
                 })
 
-            console.log($scope.maps);
+            //console.log($scope.maps);
             $rootScope.$broadcast("countries_media_refresh");
         };
 

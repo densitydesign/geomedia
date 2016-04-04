@@ -19,6 +19,18 @@ angular.module('geomediaApp')
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
 
+
+          var ttip = d3.dispatch("ttip","ttoff");
+
+          ttip.on("ttip",function(d){
+              $rootScope.$broadcast('new_tooltip',d[1]);
+              $(".ttip-s").css("top",d[0].clientY).css("left",d[0].clientX).show();
+          })
+
+          ttip.on("ttoff",function(){
+
+              $(".ttip-s").hide()
+          })
           //time parser and formatter
           scope.format = d3.time.format("%d/%m/%y");
 
@@ -26,7 +38,8 @@ angular.module('geomediaApp')
           element.height(scope.streamheight);
           var stream = geomedia.stream();
           stream.colors(scope.streamcolors)
-              .prefix(scope.streamindex);
+              .prefix(scope.streamindex)
+              .emit(ttip);
 
 
           $timeout(function(){

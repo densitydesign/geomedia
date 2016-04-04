@@ -19,7 +19,7 @@ angular.module('geomediaApp')
         }
 
           scope.locStartsWith = function(x) {
-              console.log($location.path(), x)
+              //console.log($location.path(), x)
               return $location.path().indexOf("/"+x)==0;
           }
 

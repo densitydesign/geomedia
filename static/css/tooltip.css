@@ -1,0 +1,29 @@
+.bold{
+	font-weight: bold;
+}
+
+
+.tooltip-style{
+
+background: #F9F9F9;
+border: 1px solid #E3E3E3;
+font-family: 'Source Serif Pro', serif;
+padding: 10px;
+color: #4A4A4A;
+letter-spacing: 0.67px;
+display: inline-block;
+}
+
+
+.tooltip-style h1{
+	font-weight: bold;
+	font-size: 12px;
+	padding-bottom: 5px;
+	margin-top: 10px;
+}
+.tooltip-style p{
+	font-weight: normal;
+	font-size: 12px;
+	margin-bottom: 5px;
+
+}

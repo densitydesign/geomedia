@@ -2544,6 +2544,6 @@ angular.module('geomediaApp')
       },
       getMediaPeriod: function(media) {
         return medias[media].periodicity;
-      },
+      }
     };
   });

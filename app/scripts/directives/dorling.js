@@ -13,10 +13,17 @@ angular.module('geomediaApp')
             restrict: 'E',
             link: function postLink(scope, element, attrs) {
 
+                var tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return "<h5>"+ d.label+"</h5><p>Articles <b class='blu'>"+d.articles+"</b></p><p>Ratio <b class='blu'>"+(d.ratio*100).toFixed(2)+"%</b></p>" });
+
+                /* Invoke the tip in the context of your visualization */
+
+
 
                 var chart = d3.select(element[0]);
                 var chartWidth = parseInt(chart.style("width").replace("px", ""));
                 var chartHeight = parseInt(chart.style("height").replace("px", ""));
+
+
 
                 var padding = 3;
 
@@ -28,6 +35,7 @@ angular.module('geomediaApp')
                     .attr("width", chartWidth)
                     .attr("height", chartHeight)
 
+                svg.call(tip)
 
                 var colorScale = d3.scale.linear().range(["#CAD9E3","#427A99"]);
 
@@ -66,8 +74,13 @@ angular.module('geomediaApp')
                         var found = _.find(scope.data, function(e){ return d.key == e.key})
                         if(found) {
                             d.r = radius(found.none + found[$rootScope.keyword]);
-                            console.log(found, d.r);
+                            d.articles =  found.none + found[$rootScope.keyword];
                             d.color = colorScale(found[$rootScope.keyword] / (found.none + found[$rootScope.keyword]));
+                            d.ratio = found[$rootScope.keyword] / (found.none + found[$rootScope.keyword]);
+                        }
+                        else {
+                            d.articles = 0;
+                            d.ratio = 0;
                         }
                     });
 
@@ -91,7 +104,9 @@ angular.module('geomediaApp')
                         .attr("cy", function (d) {
                             return d.y;
                         })
-                    .attr("r",0);
+                    .attr("r",0)
+                        .on('mouseover', tip.show)
+                        .on('mouseout', tip.hide)
 
                     node
                         .transition()

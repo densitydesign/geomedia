@@ -12,7 +12,8 @@
       chartHeight = 600,
       colors = ['#F8E9BA', '#E2BF29'],
       showx = true,
-        prefix = ""
+        prefix = "",
+        emit = false;
 
     function stream(selection){
       selection.each(function(data){
@@ -22,7 +23,7 @@
           height = chartHeight - margin.top - margin.bottom;
 
         var chart,
-          gradient;
+          gradient, ttip;
 
         var format = d3.time.format("%d/%m/%y");
 
@@ -36,6 +37,37 @@
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + height/2 + ")");
 
+            ttip = selection.select("svg").append("g")
+                .attr("class","strm-tooltip")
+                .style("opacity",0)
+                .attr("transform","translate(-1000,-1000)")
+
+            ttip.append("rect")
+                .attr("x",0)
+                .attr("y",0)
+                .attr("width",150)
+                .attr("height",80)
+                .style("fill","#f9f9f9")
+                .style("stroke","#e4e4e4");
+
+
+            ttip.append("text")
+                .attr("class","ttip-title")
+                .text("")
+                .attr("x",10)
+                .attr("y",20);
+
+            ttip.append("text")
+                .attr("class","ttip-articles")
+                .text("")
+                .attr("x",10)
+                .attr("y",40);
+
+            ttip.append("text")
+                .attr("class","ttip-ratio")
+                .text("")
+                .attr("x",10)
+                .attr("y",60);
 
           gradient = chart.append("defs")
             .append("linearGradient")
@@ -57,6 +89,7 @@
 
           chart.selectAll("stop").remove();
 
+          ttip = chart.select(".strm-tooltip")
 
           gradient = chart.select("#"+prefix+"gradient");
         }
@@ -161,7 +194,11 @@
           .style("fill", "url(#"+prefix+"gradient)")
           .style("stroke", "none")
           .style("stroke-width", "none")
-          .attr("d", function(d){ return area(d)});
+          .attr("d", function(d){ return area(d)})
+
+
+            .on('mousemove', showtip)
+            .on('mouseout', hidetip);
 
 
           if(showx) {
@@ -176,6 +213,45 @@
                   .attr("transform", "translate(0," + (height / 2) + ")")
                   .call(xAxis2)
           }
+
+          function showtip() {
+              var coords = d3.mouse(this);
+
+
+              var dist = Infinity;
+              var xdate = x.invert(coords[0]);
+              var mydata = {}
+              for(var d in data) {
+                  var k = format.parse(data[d].key);
+                  if(Math.abs(xdate-k) < dist) dist = Math.abs(xdate-k);
+                  else {
+                      mydata = data[d];
+                      break;
+                  }
+              }
+
+              if(!emit) {
+                  ttip.attr("transform", "translate(" + coords[0] + "," + (coords[1] + height / 2 - 100) + ")")
+                      .style("opacity", 1);
+                  ttip.select(".ttip-title").text(mydata.key)
+                  ttip.select(".ttip-articles").text("Articles " + mydata.val)
+                  ttip.select(".ttip-ratio").text("Ratio " + (mydata.ratio * 100).toFixed(2) + "%");
+              }
+              else{
+                  emit.ttip([d3.event,mydata]);
+              }
+          }
+
+          function hidetip() {
+              if(!emit) {
+                  ttip.style("opacity", 0)
+                      .attr("transform", "translate(-1000,-1000)")
+              }
+              else{
+                  emit.ttoff()
+              }
+          }
+
       }); //end selection
     } // end stream
 
@@ -208,6 +284,12 @@
       stream.prefix = function(x){
           if (!arguments.length) return prefix;
           prefix = x;
+          return stream;
+      }
+
+      stream.emit = function(x){
+          if (!arguments.length) return emit;
+          emit = x;
           return stream;
       }
 

@@ -22,14 +22,14 @@
         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">filters <i class="fa fa-caret-down"></i></button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
           <h3>Filter by RSS type:</h3>
-          <li><button type="button" class="btn btn-default btn-sm">general</button></li>
-          <li><button type="button" class="btn btn-default btn-sm">top news</button></li>
-          <li><button type="button" class="btn btn-default btn-sm">international</button></li>
+          <li><button ng-click="filterByRSS('General')" type="button" class="btn btn-default btn-sm">general</button></li>
+          <li><button ng-click="filterByRSS('Breaking news')" type="button" class="btn btn-default btn-sm">top news</button></li>
+          <li><button ng-click="filterByRSS('International')" type="button" class="btn btn-default btn-sm">international</button></li>
           <li role="separator" class="divider"></li>
           <h3>Filter by language:</h3>
-          <li><button type="button" class="btn btn-default btn-sm">english</button></li>
-          <li><button type="button" class="btn btn-default btn-sm">french</button></li>
-          <li><button type="button" class="btn btn-default btn-sm">spanish</button></li>
+          <li><button ng-click="filterByLanguage('en')" type="button" class="btn btn-default btn-sm">english</button></li>
+          <li><button ng-click="filterByLanguage('fr')" type="button" class="btn btn-default btn-sm">french</button></li>
+          <li><button ng-click="filterByLanguage('es')" type="button" class="btn btn-default btn-sm">spanish</button></li>
         </ul>
       </div>
 

@@ -48,7 +48,7 @@ angular.module('geomediaApp')
           scope.$on("media_countries_refresh",function(){
               var chartWidth = parseInt(chart.style("width").replace("px",""));
               pack.chartWidth(chartWidth);
-              console.log("udpate please")
+              //console.log("udpate please")
               scope.drawPack();
 
           })

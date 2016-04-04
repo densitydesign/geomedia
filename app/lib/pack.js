@@ -17,7 +17,10 @@
       selection.each(function(data){
         var margin = {top: 10, right: 12, bottom: 30, left: 12};
 
-        var width = chartWidth - margin.left - margin.right,
+          var tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return "<h5>"+ d.key+"</h5><p>Articles <b class='red'>"+d.count+"</b></p><p>Ratio <b class='red'>"+(d.ratio*100).toFixed(2)+"%</b></p>" });
+
+
+          var width = chartWidth - margin.left - margin.right,
           height = chartHeight - margin.top - margin.bottom;
 
         var chart,
@@ -40,6 +43,9 @@
             .select('g')
             .attr("transform", "translate(" + margin.left + "," + 0 + ")");
         }
+
+
+          selection.select("svg").call(tip);
 
 
 
@@ -86,6 +92,14 @@
           .style("stroke", function(d) { return d.parent ? d.values ? "#CACACA" : 'none' : 'none' })
             .style("fill", function(d) { return d.parent ? d.values ? "#F9F9F9" : "#F9F9F9" : "none"; })
             .attr("r", 1)
+            .filter(function(d){
+                return "parent" in d && !("values" in d)
+            })
+            .on('mouseover', tip.show)
+            .on('mouseout', tip.hide);
+
+
+
 
         circs
           .transition().duration(500)

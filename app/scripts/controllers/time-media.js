@@ -9,10 +9,28 @@
  */
 angular.module('geomediaApp')
   .controller('TimeMediaCtrl', function ($scope,$rootScope, $window) {
-
-    $scope.streamName = "";
+        $scope.tip = {};
 
         $scope.streamheight = ($window.innerHeight *.9-100) / 10;
+
+        $scope.getIndex = function(k) {
+            return _.findIndex($scope.streams, function(d,i){return d.key == k})
+        }
+
+        $scope.getData = function(k) {
+            var res = _.sortBy(_.find($scope.streams,function(d){return d.key == k}).values,function(d){return $scope.format.parse(d.key)});
+            return res;
+        }
+        /*
+         if($rootScope.bytime) {
+         $scope.reformatData();
+         }
+         */
+        $scope.$on("new_tooltip",function(event,d){
+            $scope.tip = d;
+            //console.log($scope.tip);
+            $scope.$apply();
+        })
 
     $scope.getIndex = function(k) {
       return _.findIndex($scope.streams, function(d,i){return d.key == k})

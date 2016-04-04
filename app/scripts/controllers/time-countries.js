@@ -10,6 +10,7 @@
 angular.module('geomediaApp')
   .controller('TimeCountriesCtrl', function ($scope, $rootScope, $window) {
         $scope.streamName = "";
+        $scope.tip = {};
 
         $scope.streamheight = ($window.innerHeight *.9-100) / 10;
 
@@ -26,6 +27,12 @@ angular.module('geomediaApp')
             $scope.reformatData();
         }
 */
+        $scope.$on("new_tooltip",function(event,d){
+            $scope.tip = d;
+            //console.log($scope.tip);
+            $scope.$apply();
+        })
+
         $rootScope.$watch("[startDate,endDate]",function(newValue,oldValue){
 
             if(newValue!=oldValue) {
