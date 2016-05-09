@@ -857,20 +857,14 @@ dorling{
 }
 
 
-
-
 .logo-cover{
-    width: 115px;
+    width: 100%;
     height: 115px;
-    border-radius: 50%;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="ht…i0E7Q66fySPnef95179mv9tb79j9IWQ008fzjvQAAAABJRU5ErkJggg==" /></svg></svg>');
-    margin-left: auto;
-    margin-right: auto;
-    animation-name: example;
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-}
+    background-image: url("../images/logo.png");
+    background-position: center;
+    background-repeat: no-repeat;
 
+}
 
 .intro-upload{
     /* upload your data or : */
@@ -947,4 +941,36 @@ streamaxes{
     position:fixed;
     top:0;
     left:0;
+}
+
+text tspan{
+    font-weight:bold;
+}
+.net-button{
+    float:right;
+    margin-right:30px;
+    background-color:#f9f9f9;
+    border:1px solid #e4e4e4;
+    color:#444;
+    padding:4px 10px;
+}
+
+.loading{
+    font-family:"Source Serif Pro";
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:100;
+    background:#f9f9f9;
+    width:100vw;
+    height:100vh;
+    text-align:center;
+}
+.loading i{
+    margin-top:30vh;
+    font-size:7em;
+    margin-bottom:40px;
+}
+.loading p{
+    font-size:2em;
 }
