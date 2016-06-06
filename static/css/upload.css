@@ -1,18 +1,19 @@
-
-
-/*
- * Base structure
- */
-
-html,
-body {
-  height: 100%;
-  background-color: #F9F9F9;
+html {
+  position: relative;
+  min-height: 100%;
 }
 body {
-  
-  text-align: center;
-}
+  /* Margin bottom by footer height */
+  margin-bottom: 130px;
+  background-color: white;
+  }
+
+
+
+
+
+
+
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
 .site-wrapper {
@@ -22,13 +23,11 @@ body {
   min-height: 100%;
 
 }
-.site-wrapper-inner {
-  display: table-cell;
-  vertical-align: top;
-}
+
 .cover-container {
   margin-right: auto;
   margin-left: auto;
+  margin-top: 50px;
 }
 
 /* Padding for spacing */
@@ -44,6 +43,7 @@ body {
 .cover {
   padding: 0 20px;
 }
+
 
 
 
@@ -90,6 +90,7 @@ font-size: 40px;
 color: #4A4A4A;
 letter-spacing: 0.66px;
 margin-bottom: 40px;
+text-align: center;
 }
 
 
@@ -102,6 +103,7 @@ letter-spacing: 0.68px;
 line-height: 20px;
 margin-right: 20%;
 margin-left: 20%;
+text-align: center;
 }
 
 /* vecchio logo
@@ -142,57 +144,6 @@ margin-left: 20%;
 }
 
 
-.intro-upload{
-  /* upload your data or : */
-font-family: 'Source-Sans Pro', sans-serif;
-font-size: 17px;
-color: #4A4A4A;
-letter-spacing: 0.78px;
-font-weight: normal;
-}
-
-
-.intro-upload p{
-  padding-bottom: 5px;
-  
-}
-.intro-upload a{
-border-bottom: 1px solid #4A4A4A;
-color: #4A4A4A;
-}
-
-.intro-upload a:hover{
-text-decoration: none;
-border: 0;
-}
-
-
-.drag{
-/* Rectangle 60: */
-background: #FFFFFF;
-border: 1px dashed #CACACA;
-width: 500px;
-height: 160px;
-margin-left: auto;
-margin-right: auto;
-margin-top: 30px;
-
-}
-
-.drag .fa{
-  color: #CACACA;
-  font-size: 30px;
-}
-
-
-.drag:hover{
-  background-color: #F9F9F9;
-}
-
-
-.drag:hover .fa{
-    color: white;
-}
 
 .Aligner{
   display: flex;
@@ -209,3 +160,123 @@ margin-top: 30px;
   margin: 0;
 }
 
+
+
+
+
+.dataset{
+
+ background: #F9F9F9;
+border: 1px solid #E3E3E3;
+font-family: 'Source Serif Pro', serif;
+padding: 15px;
+color: #4A4A4A;
+letter-spacing: 0.67px;
+word-wrap: break-word;
+margin-top: 10px;
+text-align: left;
+ position:relative;
+ display: block;
+     -webkit-transition: background 0.2s; /* Safari */
+    transition: background 0.2s;
+
+}
+
+
+.dataset h3{
+  padding-bottom: 9px;
+  padding-top: 10px;
+  
+  font-family: 'Source Serif Pro', serif;
+  font-size: 23px;
+  letter-spacing: 0.78px;
+  margin: 0px;
+
+}
+
+
+.dataset p{
+ font-family: 'Source Sans Pro', sans-serif;
+    font-size: 14px;
+    color: #4A4A4A;
+    letter-spacing: 0.64px;
+    line-height: 19px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+
+
+.dataset:hover{
+  background: #E3E3E3;
+}
+
+
+.dataset:hover p{
+
+}
+
+
+
+.riga{
+   -moz-column-width: 18em;
+ -webkit-column-width: 18em;
+ -moz-column-gap: 1em;
+ -webkit-column-gap:1em; 
+}
+
+
+.item{
+display: inline-block;
+ padding:  .25rem;
+ width:  100%; 
+}
+
+
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 80px;
+  background-color: #F9F9F9;
+  margin-top: 50px;
+  padding-top: 30px;
+}
+
+
+.footer p{
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 13px;
+      letter-spacing: 0.64px;
+    line-height: 19px;
+    color: #4A4A4A;
+}
+
+
+.footer img {
+  width: 10px;
+  height: 10px;
+  margin-bottom: 2px;
+
+}
+
+
+.serif{
+    font-family: 'Source Serif Pro', serif;
+}
+
+.footer a{
+  text-decoration: none;
+    color: #4A4A4A;
+    -webkit-transition: opacity 0.2s; /* Safari */
+    transition: opacity 0.2s;
+}
+
+
+.footer a:hover{
+  opacity: 0.5;
+}

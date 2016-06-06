@@ -58,7 +58,7 @@ angular.module('geomediaApp')
           scope.prepareData = function() {
 
               try {
-                  scope.data = scope.streamdata({k: scope.streamindex});
+                  scope.data = _.cloneDeep(scope.streamdata({k: scope.streamindex}));
               }
               catch(err) {
                   scope.data = [];

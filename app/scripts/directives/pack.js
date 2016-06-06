@@ -7,7 +7,7 @@
  * # pack.js
  */
 angular.module('geomediaApp')
-  .directive('pack', function ($rootScope, medias) {
+  .directive('pack', function ($rootScope, medias, $window) {
     return {
       template: '<div></div>',
       restrict: 'E',
@@ -16,9 +16,12 @@ angular.module('geomediaApp')
 
         var chart = d3.select(element[0]);
         var chartWidth = parseInt(chart.style("width").replace("px",""));
+        var chartHeight = ($window.innerHeight *.9-200);
 
         var pack = geomedia.pack()
           .chartWidth(chartWidth)
+          .chartHeight(chartHeight)
+
 
 
         scope.drawPack = function() {
@@ -60,7 +63,7 @@ angular.module('geomediaApp')
 
         $rootScope.$watch("[gotData,filteredMedias.length]",function(newValue,oldValue){
           if (newValue) {
-            
+
             scope.drawPack();
           }
         },true)

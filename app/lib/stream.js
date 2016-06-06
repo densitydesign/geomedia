@@ -27,8 +27,8 @@
 
         var format = d3.time.format("%d/%m/%y");
 
-        var colorScale = d3.scale.linear()
-          .range(colors);
+        var colorScale = d3.scale.log()
+          .range(colors).clamp(true).nice();
 
         if (selection.select('svg').empty()){
           chart = selection.append("svg")
@@ -127,7 +127,7 @@
             }
         })
 
-        colorScale.domain([0,bigratio]);
+        colorScale.domain([0.001,bigratio]);
 
 
 
@@ -136,7 +136,8 @@
           gradient.append("stop")
             .attr("offset", (z/(data.length))*100+"%")
             .attr("stop-color", function(){
-              return colorScale(d.ratio);
+              if (d.ratio == 0) return colors[0];
+              else return colorScale(d.ratio);
             })
             .attr("stop-opacity", 1);
         })

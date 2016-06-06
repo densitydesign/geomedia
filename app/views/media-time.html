@@ -1,4 +1,35 @@
+
+
 <div class="media-time">
+
+  <div ng-style="{'left':open? '0' : '-350px'}" class="col-sm-3 LegendPanel ClearPadding">
+    <div class="legend-toggle col-sm-offset-12">
+      <p ng-click="open = !open"> <span ng-show="open">close x</span><span ng-show="!open">about this viz</span> </p>
+    </div>
+    <div class="legend-text">
+      <p>Number of articles focusing on a country and proportion which talk about {{$root.keyword}}, by media and by week, grouped by language used</p>
+    </div>
+
+    <div class="legend-size Aligner">
+      <div class="legend-size-title AlignerItem">
+        <p>number of articles</p>
+      </div>
+      <div class="legend-size-element Aligner">
+        <img class="AlignerItem" src="images/bubble.svg" alt="">
+      </div>
+    </div>
+
+    <div class="legend-size Aligner">
+      <div class="legend-size-title AlignerItem">
+        <p>proportion of articles on {{$root.keyword}}</p>
+      </div>
+      <div class="legend-size-element Aligner">
+        <img class="AlignerItem" src="images/media-color.svg" alt="">
+      </div>
+    </div>
+
+
+  </div>
 
     <!--<packsingle></packsingle>-->
 <pack></pack>

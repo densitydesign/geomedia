@@ -7,7 +7,7 @@
  * # datapanel
  */
 angular.module('geomediaApp')
-  .directive('datapanel', function (dataservice, medias, $rootScope, $location,$filter) {
+  .directive('datapanel', function (dataservice, medias, $rootScope, $location,$filter, $timeout) {
     return {
       templateUrl: 'views/datapanel.html',
       restrict: 'E',
@@ -18,6 +18,10 @@ angular.module('geomediaApp')
         scope.format = d3.time.format("%d/%m/%y")
         scope.txtfiltMedia="";
         scope.txtfiltCountries = "";
+        scope.filteredlangs = {};
+        scope.filteredtypes = {};
+        scope.mediaservice = medias;
+
 
         $rootScope.filteredMedias = [];
         $rootScope.filteredCountries = [];
@@ -95,11 +99,15 @@ angular.module('geomediaApp')
         }
 
         scope.clearAllMedias = function() {
+          $rootScope.updating = true;
+          $timeout(function(){
           $rootScope.medias.forEach(function(d){
             d.active = false;
           })
           $rootScope.filteredMedias = _.map($rootScope.medias,'key');
           scope.filterByMedia($rootScope.filteredMedias);
+          $rootScope.updating = false;
+          })
 
         }
 
@@ -110,6 +118,14 @@ angular.module('geomediaApp')
           $rootScope.filteredCountries = _.map($rootScope.countries,'key');
           scope.filterByCountry($rootScope.filteredCountries);
 
+        }
+
+        scope.hasLang = function(ln) {
+          var found = _.find($rootScope.medias, function(d){
+            return d.key.substring(0,2) == ln && $rootScope.filteredMedias.indexOf(d.key)<0;
+          })
+
+          return found;
         }
 
         //to be used for elastic lists
@@ -169,19 +185,43 @@ angular.module('geomediaApp')
         })
 
           scope.filterByLanguage = function(ln) {
+
+              var isfiltered = false;
+
               var langMedias = $rootScope.medias.filter(function(d){
                   return d.key.indexOf(ln)==0;
               })
 
-              langMedias.forEach(function(c){
+            if(ln in scope.filteredlangs && scope.filteredlangs[ln]) {
+              isfiltered = true;
+            }
 
-                  if(c.active) {
-                      c.active = false;
-                      $rootScope.filteredMedias
-                          .push(c.key)
+            langMedias.forEach(function(c){
+
+
+
+              if(isfiltered) {
+                if (!c.active) {
+                  c.active = true;
+                  var index = $rootScope.filteredMedias.indexOf(c.key);    // <-- Not supported in <IE9
+                  if (index !== -1) {
+                    $rootScope.filteredMedias.splice(index, 1);
                   }
+                }
+              }
+
+              else {
+
+                if (c.active) {
+                  c.active = false;
+                  $rootScope.filteredMedias
+                    .push(c.key)
+                }
+              }
 
               })
+
+              scope.filteredlangs[ln] = !scope.filteredlangs[ln];
               scope.filterByMedia($rootScope.filteredMedias);
           }
 
@@ -209,19 +249,23 @@ angular.module('geomediaApp')
         }
 
         function reduceAdd(p, v) {
-         return Math.round(p + parseFloat(v.weight));
+         //return p + parseFloat(v.weight);
+          return p+1;
         }
 
         function reduceRemove(p, v) {
-          return Math.round(p - parseFloat(v.weight));
+          //return p - parseFloat(v.weight);
+          return p-1
 
         }
 
         //filter by time intervals
         scope.filterByTime = function(start, end) {
           $rootScope.bytime.filterRange([start.getTime(),end.getTime()]);
+
           //console.log($rootScope.countries[1])
           scope.$apply();
+          $rootScope.updating = false;
 
         }
 
@@ -253,8 +297,10 @@ angular.module('geomediaApp')
         //listener on dateChange
         scope.$on("dateChange", function(event, dates){
 
+
           $rootScope.startDate = dates[0];
           $rootScope.endDate = dates[1];
+
           $rootScope.times = d3_time.timeDay.range($rootScope.startDate, $rootScope.endDate,7)
 
           scope.filterByTime($rootScope.startDate, $rootScope.endDate);

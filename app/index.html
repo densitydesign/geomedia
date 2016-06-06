@@ -40,16 +40,17 @@
 
 <loader ng-show="!$root.gotdata"></loader>
 
+<div ng-show="$root.updating" class="loading">
+  <img src="images/gif-loading.gif"/>
+
+</div>
 
 <topbar ng-show="$root.gotdata"></topbar>
 
 <div class="container-fluid fullheight">
   <div class="row fullheight">
 
-
   <datapanel ng-show="$root.gotdata"></datapanel>
-
-
 
   <div ng-show="$root.gotdata" class="col-sm-8 col-sm-offset-4 col-md-8 col-md-offset-4 col-lg-8 col-lg-offset-4 main fullheight" ng-view=""></div>
   </div>
@@ -130,6 +131,7 @@
 <script src="scripts/directives/dorling-single.js"></script>
 <script src="scripts/controllers/countries-time.js"></script>
 <script src="scripts/controllers/network.js"></script>
+<script src="scripts/filters/prettyurl.js"></script>
 <!-- endbuild -->
 </body>
 </html>

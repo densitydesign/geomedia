@@ -1,1 +1,40 @@
+<div ng-style="{'left':open? '0' : '-350px'}" class="col-sm-3 LegendPanel ClearPadding">
+  <div class="legend-toggle col-sm-offset-12">
+    <p ng-click="open = !open"> <span ng-show="open">close x</span><span ng-show="!open">about this viz</span> </p>
+  </div>
+  <div class="legend-text">
+    <p>Co-quotation of countries in articles focusing on {{$root.keyword}}</p>
+  </div>
+
+  <div class="legend-size Aligner">
+    <div class="legend-size-title AlignerItem">
+      <p>articles tagged with country AND {{$root.keyword}}</p>
+    </div>
+    <div class="legend-size-element Aligner">
+      <img class="AlignerItem" src="images/bubble.svg" alt="">
+    </div>
+  </div>
+
+
+  <div class="legend-size Aligner">
+    <div class="legend-size-title AlignerItem">
+      <p>number of articles co-quoting two countries</p>
+    </div>
+    <div class="legend-size-element Aligner">
+      <img class="AlignerItem" src="images/network.svg" alt="">
+    </div>
+  </div>
+
+  <div class="legend-size Aligner">
+    <div class="legend-size-title AlignerItem">
+      <p>proportion of articles on {{$root.keyword}}</p>
+    </div>
+    <div class="legend-size-element Aligner">
+      <img class="AlignerItem" src="images/countries-color.svg" alt="">
+    </div>
+  </div>
+
+
+</div>
+
 <network></network>

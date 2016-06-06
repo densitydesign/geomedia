@@ -27,3 +27,22 @@ display: inline-block;
 	margin-bottom: 5px;
 
 }
+
+
+.MediaColor{
+color:#EF4141;	
+}
+
+
+.MediaColor:hover{
+color:#EF4141;	
+}
+
+.CountriesColor{
+color:#427A99;
+}
+
+.TimeColor{
+	color: #E2BF29;
+}
+

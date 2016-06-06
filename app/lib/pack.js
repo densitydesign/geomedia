@@ -65,7 +65,7 @@
           return d3.max(d.values,function(e){return e.count})
         });
 
-        var colorScale = d3.scale.linear().range(colors).domain([0,ratioMax]);
+        var colorScale = d3.scale.log().range(colors).clamp(true).nice().domain([0.001,ratioMax]);
 
         var nodes = pack.nodes({key:'root',values:data});
 
@@ -77,7 +77,7 @@
           .selectAll("text")
 
          // .data(nodes.filter(function(d) { return !d.values && d.count >= countMax*1/4}), function(d){return d.key})
-            .data(nodes.filter(function(d) { return !d.values && d.r >=20}), function(d){return d.key})
+            .data(nodes.filter(function(d) { return !d.values && d.r >=17}), function(d){return d.key})
 
 /*
           node.enter().append("g")
@@ -97,13 +97,21 @@
             })
             .on('mouseover', tip.show)
             .on('mouseout', tip.hide);
-
-
-
-
+        
         circs
           .transition().duration(500)
-          .style("fill", function(d) { return d.parent ? d.values ? "#F9F9F9" : colorScale(d.ratio) : "none"; })
+          .style("fill", function(d) {
+              if(d.parent) {
+                if(d.values) {
+                  return "#F9F9F9"
+                }
+                else {
+                  if(d.ratio == 0) return colors[0];
+                  else return colorScale(d.ratio);
+                }
+              }
+            else return "none"
+             })
           .attr("r", function(d) { return d.r; })
           .attr("cy",function(d){return d.y})
           .attr("cx",function(d){return d.x})
@@ -112,16 +120,60 @@
         texts
           .enter().append("text")
           .attr("text-anchor", "middle")
-            .style("font-size",10)
+          .attr("x",0)
+          .attr("y",0)
+            .style("font-size",9)
           .attr("dy", "0.3em")
             .style('opacity',0)
-          .text(function(d) { return d.key})
+          .attr("transform",function(d) {return "translate("+d.x+","+d.y+")"})
+          .each(addText)
 
-          texts
+          //.text(function(d) { return d.key})
+
+
+
+        function addText(d) {
+          var el = d3.select(this);
+          var maxln = 15;
+
+          function closest (num, arr) {
+            var curr = arr[0]
+
+            for(var val in arr) {
+              if (Math.abs(num - arr[val]) < Math.abs(num - curr)) curr = arr[val]
+            }
+
+            return curr
+          }
+
+          if(d.key.length > maxln) {
+            var indices = [];
+            for(var i=0; i<d.key.length;i++) {
+              if (d.key[i] === " ") indices.push(i);
+            }
+
+            el.append("tspan").attr("x",0).attr("text-anchor","middle").attr("dy",-2).text(d.key.substr(0,closest(d.key.length/2, indices)))
+            el.append("tspan").attr("x",0).attr("text-anchor","middle").attr("dy",10).text(d.key.substr(closest(d.key.length/2, indices)))
+
+          }
+          else el.text(d.key);
+
+        }
+
+
+            texts
           .transition().duration(500)
-          .attr("x", function(d){return d.x})
-          .attr("y", function(d){return d.y})
-              .style('opacity',1)
+              .attr("transform",function(d) {return "translate("+d.x+","+d.y+")"})
+            .style('opacity',1)
+
+            //.attr("x", function(d){return d.x})
+          //.attr("y", function(d){return d.y})
+
+
+        texts
+          .exit()
+          .remove();
+
 
         circs
           .exit()
@@ -129,9 +181,7 @@
             .attr("r", 0)
           .remove();
 
-        texts
-          .exit()
-          .remove();
+
 
 
 

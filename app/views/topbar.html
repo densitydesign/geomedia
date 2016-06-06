@@ -11,14 +11,14 @@
 
             <div class="col-sm-4 Aligner" id="home">
 
-              <a class="AlignerItem" href="#"> <span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
+              <a ng-click="goHome()" class="AlignerItem"> <span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
             </div>
             <div class="col-sm-8 Aligner" id="title">
               <h3 class="AlignerItem">Ebola</h3>
             </div>
           </div>
           <div class="col-md-6 Aligner" id="DataDescription">
-            <p>234.567 articles in 3 languages from 01-07-2014 to 31-12-2014. 22 media from 12 countries.</p>
+            <p>{{totarts | number}} articles in {{langsln}} languages from <b class="TimeColor">{{$root.startDate | date}}</b> to <b class="TimeColor">{{$root.endDate | date}}</b>. <b class="MediaColor">{{mediasln}}</b> media from <b class="CountriesColor">{{countriesln}}</b> countries.</p>
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@
               </div>
               <div class="col-sm-6 SecondDimension ClearPadding"><button ng-class="{'actv':locEqualTo('time-media')}" type="button" ng-click="go('time-media')" class="btn btn-primary DimensionButton MediaButton">+Media</button>
               </div>
-              <div class="col-sm-6 SecondDimension ClearPadding"><button ng-class="{'actv':locEqualTo('time-countries')}" type="button" ng-click="go('time-countries')" class="btn btn-primary DimensionButton CountriesButton">+Countries</button>
+              <div class="col-sm-6 SecondDimension ClearPadding"><button ng-class="{'actv':locEqualTo('time-countries')}" type="button" ng-click="go('time-countries')" class="btn btn-primary DimensionButton CountriesButton">+Geographical Units</button>
               </div>
             </div>
           </div>
@@ -42,14 +42,14 @@
               </div>
               <div class="col-sm-6 SecondDimension ClearPadding"><button ng-class="{'actv':locEqualTo('media-time')}" type="button" ng-click="go('media-time')"  class="btn btn-primary DimensionButton TimeButton">+Time</button>
               </div>
-              <div class="col-sm-6 SecondDimension ClearPadding"><button ng-class="{'actv':locEqualTo('media-countries')}" type="button" ng-click="go('media-countries')"  class="btn btn-primary DimensionButton CountriesButton">+Countries</button>
+              <div class="col-sm-6 SecondDimension ClearPadding"><button ng-class="{'actv':locEqualTo('media-countries')}" type="button" ng-click="go('media-countries')"  class="btn btn-primary DimensionButton CountriesButton">+Geographical Units</button>
               </div>
             </div>
           </div>
 
           <div class="col-sm-4">
             <div class="row">
-              <div class="col-sm-12 FirstDimension ClearPadding"> <button ng-class="{'actv':locStartsWith('countries')}" type="button"  ng-click="go('countries')" class="btn btn-primary btn-lg DimensionButton CountriesButton">Countries</button>
+              <div class="col-sm-12 FirstDimension ClearPadding"> <button ng-class="{'actv':locStartsWith('countries')}" type="button"  ng-click="go('countries')" class="btn btn-primary btn-lg DimensionButton CountriesButton">Geographical Units</button>
               </div>
               <div class="col-sm-6 SecondDimension ClearPadding"><button ng-class="{'actv':locEqualTo('countries-time')}" type="button" ng-click="go('countries-time')" class="btn btn-primary DimensionButton TimeButton">+Time</button>
               </div>

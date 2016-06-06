@@ -41,6 +41,12 @@ color:#EF4141;
 color:#427A99;
 }
 
+.TimeColor{
+	color: #E2BF29;
+}
+
+
+
 /* Navbar */
 
 #navbar .row{
@@ -475,56 +481,3 @@ margin-bottom: 0px;
 	color: #F9F9F9;
 }
 
-
-/* Legend panel */
-
-
-
-
-.LegendPanel{
-	height: 400px;
-	background-color: red;
-	border: 1px solid  blue;
-
-}
-
-
-
-
-@keyframes ShowLegendAnim {
-    from {margin-left: 100%; display: block;}
-    to {margin-left: 66.6666666%; display: block;}
-}
-
-@keyframes HideLegendAnim {
-  from {margin-left: 66.6666666%; display: block;}
-    to {margin-left: 100% !important; display: none;}
-}
-
-.StartLegend{
-		display: none;	
-}
-
-
-.ShowLegend{
-	animation-name: ShowLegendAnim;
-    animation-duration: 1s;
-
-   
-}
-
-.HideLegend{
-	animation-name: HideLegendAnim;
-    animation-duration: 1s;
-
- 
-}
-
-
-#showhide{
-	width: 100px;
-	height: 30px;
-	left: 900px;
-	position: absolute;
-	background-color: red;
-}

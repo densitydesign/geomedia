@@ -17,13 +17,9 @@ angular.module('geomediaApp')
 
                 /* Invoke the tip in the context of your visualization */
 
-
-
                 var chart = d3.select(element[0]);
                 var chartWidth = parseInt(chart.style("width").replace("px", ""));
                 var chartHeight = parseInt(chart.style("height").replace("px", ""));
-
-
 
                 var padding = 3;
 
@@ -37,7 +33,7 @@ angular.module('geomediaApp')
 
                 svg.call(tip)
 
-                var colorScale = d3.scale.linear().range(["#CAD9E3","#427A99"]);
+                var colorScale = d3.scale.log().range(["#CAD9E3","#427A99"]).clamp(true).nice();
 
                 var force = d3.layout.force()
                     .charge(0)
@@ -54,7 +50,7 @@ angular.module('geomediaApp')
                         return d[$rootScope.keyword] / (d.none + d[$rootScope.keyword]);
                     });
 
-                    colorScale.domain([0,colMax]);
+                    colorScale.domain([0.01,colMax]);
 
                     var radius = d3.scale.sqrt()
                         .domain([0, max])
@@ -75,7 +71,7 @@ angular.module('geomediaApp')
                         if(found) {
                             d.r = radius(found.none + found[$rootScope.keyword]);
                             d.articles =  found.none + found[$rootScope.keyword];
-                            d.color = colorScale(found[$rootScope.keyword] / (found.none + found[$rootScope.keyword]));
+                            d.color = found[$rootScope.keyword] / (found.none + found[$rootScope.keyword]) == 0 ? "#CAD9E3" : colorScale(found[$rootScope.keyword] / (found.none + found[$rootScope.keyword]));
                             d.ratio = found[$rootScope.keyword] / (found.none + found[$rootScope.keyword]);
                         }
                         else {
@@ -83,7 +79,6 @@ angular.module('geomediaApp')
                             d.ratio = 0;
                         }
                     });
-
 
                     force
                         .nodes(init_data)
@@ -94,6 +89,8 @@ angular.module('geomediaApp')
                         .data(init_data, function (d) {
                             return d.key
                         });
+
+
 
                     node.enter().append("circle")
                         .attr("class", "g-comp")
@@ -111,10 +108,48 @@ angular.module('geomediaApp')
                     node
                         .transition()
                         .duration(500)
-                        .style("fill", function(d){return 'color' in d ? d.color : colorScale(0)})
+                        .style("fill", function(d){return 'color' in d ? d.color : colorScale(0.01)})
                         .attr("r", function (d) {
                             return 'r' in d ? d.r : radius(0);
                         });
+
+
+                  var texts = svg.selectAll("text.lbl")
+                    .data(init_data, function (d) {
+                      return d.key
+                    });
+
+                  texts.enter().append("text")
+                    .attr("class", "lbl")
+                    .style("fill","#333")
+                    .style("font-family","Source Serif")
+                    .attr("x", function (d) {
+                      return d.x;
+                    })
+                    .attr("y", function (d) {
+                      return d.y;
+                    })
+                    .attr("dy", function (d) {
+                      return d.r/10;
+                    })
+                    .style("font-size",9)
+                    .attr("text-anchor","middle")
+                    .text(function(d){
+                      return d.key
+                    })
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide)
+
+
+                  texts
+                    .transition()
+                    .duration(500)
+                    .style("fill", function(d){return d.r > 10 ? '#333' : 'none'})
+                    .attr("r", function (d) {
+                      return 'r' in d ? d.r : radius(0);
+                    });
+
+
                 }
 
                 function tick(e) {
@@ -128,6 +163,14 @@ angular.module('geomediaApp')
                         .attr("cy", function (d) {
                             return d.y;
                         });
+
+                  chart.selectAll(".lbl")
+                    .attr("x", function (d) {
+                      return d.x;
+                    })
+                    .attr("y", function (d) {
+                      return d.y;
+                    });
                 }
 
 
@@ -168,10 +211,7 @@ angular.module('geomediaApp')
 
                 scope.$on("countries_update", function() {
                     scope.drawDorling();
-
                 })
-
-
             }
         };
     });

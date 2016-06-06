@@ -68,6 +68,7 @@ angular.module('geomediaApp')
         $rootScope.$watch("countries",function(newVal){
             if(newVal && !$scope.entries) {
                 $scope.entries = $rootScope.countries.filter(function(e){return e.key!=""}).slice(0,10);
+
                 $scope.choices = $rootScope.countries.map(function(d){return {key:d.key, label: d.name}});
             }
         })

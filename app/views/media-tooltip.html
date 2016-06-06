@@ -1,0 +1,8 @@
+<div class="tooltip-style">
+  <h1>{{mediaservice.getMediaName(media.key)}}</h1>
+  <p>RSS type <span class="MediaColor bold">{{mediaservice.getMediaType(media.key)}}</span></p>
+  <p>Language <span class="MediaColor bold">{{mediaservice.getMediaLanguage(media.key)}}</span></p>
+  <p>Country of origin <span class="MediaColor bold">{{mediaservice.getMediaCountry(media.key) | countries}}</span></p>
+ <p>Media URL <span class="MediaColor bold"><a  class="MediaColor" ng-href="mediaservice.getMediaUrl(media.key)">{{mediaservice.getMediaUrl(media.key) | prettyurl}}</a></span></p>
+  <p>items tagged/items collected <span class="MediaColor bold">54/145</span></p>
+</div>

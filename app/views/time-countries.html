@@ -1,20 +1,52 @@
-<div class="multistream">
-    <div class="d3-tip ttip-s">
-        <h5>
-            {{tip.key}}
-        </h5>
-        <p>Articles <b class="blu">{{tip.val}}</b></p>
-        <p>Ratio <b class="blu">{{(tip.ratio*100).toFixed(2)}}%</b></p>
-    </div>
-    <streamaxes></streamaxes>
-    <div class="stream-item" ng-repeat="stream in entries track by $index | limitTo:10 ">
+<div ng-style="{'left':open? '0' : '-350px'}" class="col-sm-3 LegendPanel ClearPadding">
+  <div class="legend-toggle col-sm-offset-12">
+    <p ng-click="open = !open"> <span ng-show="open">close x</span><span ng-show="!open">about this viz</span> </p>
+  </div>
+  <div class="legend-text">
+    <p>Number of articles focusing on a country and proportion which talk about {{$root.keyword}}, by week</p>
+  </div>
 
-        <div ng-click="editorEnabled=true" ng-hide="editorEnabled" ng-style="{'margin-top':streamheight/10}" class="stream-dropdown"><i class="fa fa-caret-down"></i> {{stream.key | countries}}</div>
-        <div class="stream-dropdown type" ng-show="editorEnabled">
-            <input type="text" ng-model="streamName" typeahead-editable="false" uib-typeahead="m as m.label for m in choices | filter:$viewValue | limitTo:10"  typeahead-on-select="editorEnabled=false; onSelect($item, $model, $label, $event, $index)"/>
-        </div>
-        <streamsingle class="streamsingle" streamcolors="['#EAF3FC', '#427A99']" streamheight="{{streamheight}}" streamindex ="{{stream.key}}" streamdata="getData(k)"></streamsingle>
-        <div class="clearfix"></div>
-
+  <div class="legend-size Aligner">
+    <div class="legend-size-title AlignerItem">
+      <p>number of articles</p>
     </div>
+    <div class="legend-size-element Aligner">
+      <img class="AlignerItem" src="images/stream.svg" alt="">
+    </div>
+  </div>
+
+  <div class="legend-size Aligner">
+    <div class="legend-size-title AlignerItem">
+      <p>proportion of articles on {{$root.keyword}}</p>
+    </div>
+    <div class="legend-size-element Aligner">
+      <img class="AlignerItem" src="images/countries-color.svg" alt="">
+    </div>
+  </div>
 </div>
+
+<div class="multistream">
+  <div class="d3-tip ttip-s">
+    <h5>
+      {{tip.key}}
+    </h5>
+    <p>Articles <b class="blu">{{tip.val}}</b></p>
+    <p>Ratio <b class="blu">{{(tip.ratio*100).toFixed(2)}}%</b></p>
+  </div>
+  <streamaxes></streamaxes>
+  <div class="stream-item" ng-repeat="stream in entries track by $index | limitTo:10 ">
+
+    <div ng-click="editorEnabled=true" ng-hide="editorEnabled" ng-style="{'margin-top':streamheight/10}" class="stream-dropdown"><i class="fa fa-caret-down"></i> {{stream.key | countries}}</div>
+    <div class="stream-dropdown type" ng-show="editorEnabled">
+      <input ng-focus="dropdownActive = true" typeahead-min-length="0" ng-blur="editorEnabled=false" placeholder="search" typeahead-select-on-blur="true" type="text" ng-model="streamName" typeahead-editable="false" uib-typeahead="m as m.label for m in choices | filter:$viewValue"  typeahead-on-select="editorEnabled=false; onSelect($item, $model, $label, $event, $index)"/>
+    </div>
+    <streamsingle class="streamsingle" streamcolors="['#EAF3FC', '#427A99']" streamheight="{{streamheight}}" streamindex ="{{stream.key}}" streamdata="getData(k)"></streamsingle>
+    <div class="clearfix"></div>
+
+  </div>
+</div>
+
+
+
+
+

@@ -27,9 +27,9 @@
           <li><button ng-click="filterByRSS('International')" type="button" class="btn btn-default btn-sm">international</button></li>
           <li role="separator" class="divider"></li>
           <h3>Filter by language:</h3>
-          <li><button ng-click="filterByLanguage('en')" type="button" class="btn btn-default btn-sm">english</button></li>
-          <li><button ng-click="filterByLanguage('fr')" type="button" class="btn btn-default btn-sm">french</button></li>
-          <li><button ng-click="filterByLanguage('es')" type="button" class="btn btn-default btn-sm">spanish</button></li>
+          <li><button ng-click="filterByLanguage('en')" type="button" ng-class="{'actv':!hasLang('en')}" class="btn btn-default btn-sm">english</button></li>
+          <li><button ng-click="filterByLanguage('fr')" type="button" ng-class="{'actv':!hasLang('fr')}" class="btn btn-default btn-sm">french</button></li>
+          <li><button ng-click="filterByLanguage('es')" type="button" ng-class="{'actv':!hasLang('es')}" class="btn btn-default btn-sm">spanish</button></li>
         </ul>
       </div>
 
@@ -42,11 +42,10 @@
 
       <div class="ElasticList">
         <ul class="list-group">
-          <li ng-click="filterMedia(media)" ng-class="{'DeselectedItem':!media.active}" ng-repeat="media in $root.medias | orderBy:orderMediaByFilteredKey | filter:txtfiltMedia" class="list-group-item">
+          <li uib-tooltip-template="'views/media-tooltip.html'" tooltip-placement="top" ng-click="filterMedia(media)" ng-class="{'DeselectedItem':!media.active}" ng-repeat="media in $root.medias | orderBy:orderMediaByFilteredKey | filter:txtfiltMedia" class="list-group-item">
             <span class="badge">{{media.value}}</span>
             {{media.key | medias}}
           </li>
-
         </ul>
       </div>
 
@@ -55,7 +54,7 @@
 
 
     <div class="col-sm-6 CountriesPanel ClearPadding">
-      <h2 class="AddMargin">Select Countries</h2>
+      <h2 class="AddMargin">Select Geographical units</h2>
 
       <div class="SortGroup AddMargin">
         <h3>Sort by:</h3>
@@ -78,9 +77,14 @@
 
       <div class="ElasticList">
         <ul class="list-group">
-          <li ng-if="country.key!=''" ng-click="filterCountry(country)" ng-class="{'DeselectedItem':!country.active}" ng-repeat="country in $root.countries | orderBy:orderCountryByFilteredKey | filter:txtfiltCountries"  class="list-group-item">
+          <li  ng-click="filterCountry(country)" ng-class="{'DeselectedItem':!country.active}" ng-repeat="country in $root.countries | orderBy:orderCountryByFilteredKey | filter:txtfiltCountries"  class="list-group-item">
             <span class="badge">{{country.value}}</span>
+            <span ng-if="country.key!=''">
             {{country.key | countries}}
+              </span>
+             <span ng-if="country.key==''">
+            No geographical units
+              </span>
           </li>
         </ul>
       </div>

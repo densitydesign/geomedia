@@ -25,7 +25,7 @@ angular.module('geomediaApp')
 
           var svg = chart.append("svg")
 
-          var colorScale = d3.scale.linear().range(["#CAD9E3","#427A99"]);
+          var colorScale = d3.scale.log().range(["#CAD9E3","#427A99"]).clamp(true).nice();
 
           var force = d3.layout.force()
               .charge(0)
@@ -34,7 +34,7 @@ angular.module('geomediaApp')
 
           scope.drawMap = function() {
 
-              scope.data = _.clone(scope.mapdata({k: scope.mapindex}))
+              scope.data = _.cloneDeep(scope.mapdata({k: scope.mapindex}))
 
               var chartWidth = parseInt(chart.style("width").replace("px", ""));
               var chartHeight = scope.mapheight;
@@ -60,11 +60,11 @@ angular.module('geomediaApp')
                   return d[$rootScope.keyword] / (d.none + d[$rootScope.keyword]);
               });
 
-              colorScale.domain([0,colMax]);
+              colorScale.domain([0.001,colMax]);
 
               var radius = d3.scale.sqrt()
                   .domain([0, max])
-                  .range([1, scope.mapheight/10]);
+                  .range([1, scope.mapheight/20]);
 
               var init_data = _.cloneDeep(dorlingservice.getData());
 
@@ -123,6 +123,41 @@ angular.module('geomediaApp')
                       return 'r' in d ? d.r : radius(0);
                   });
 
+            var texts = svg.selectAll("text.lbl")
+              .data(init_data, function (d) {
+                return d.key
+              });
+
+            texts.enter().append("text")
+              .attr("class", "lbl")
+              .style("fill","#333")
+              .style("font-family","Source Serif")
+              .attr("x", function (d) {
+                return d.x;
+              })
+              .attr("y", function (d) {
+                return d.y;
+              })
+              .attr("dy", function (d) {
+                return d.r/10;
+              })
+              .style("font-size",9)
+              .attr("text-anchor","middle")
+              .text(function(d){
+                return d.key
+              })
+              .on('mouseover', tip.show)
+              .on('mouseout', tip.hide)
+
+
+            texts
+              .transition()
+              .duration(500)
+              .style("fill", function(d){return d.r > 10 ? '#333' : 'none'})
+              .attr("r", function (d) {
+                return 'r' in d ? d.r : radius(0);
+              });
+
           }
 
           function tick(e) {
@@ -136,6 +171,14 @@ angular.module('geomediaApp')
                   .attr("cy", function (d) {
                       return d.y;
                   });
+
+            chart.selectAll(".lbl")
+              .attr("x", function (d) {
+                return d.x;
+              })
+              .attr("y", function (d) {
+                return d.y;
+              });
           }
 
 

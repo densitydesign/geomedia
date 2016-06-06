@@ -24,8 +24,10 @@ angular.module('geomediaApp')
 
           scope.drawPack = function() {
               try {
-                  scope.data = _.clone(scope.packdata({k: scope.packindex})).map(function(d){
+                  scope.data = _.cloneDeep(scope.packdata({k: scope.packindex})).map(function(d){
+
                       d.values.forEach(function(e,j){
+                       
                           e.count = e.values.count;
                           e.ratio = e.values.ratio;
                           delete e['values'];
@@ -34,8 +36,10 @@ angular.module('geomediaApp')
                   });
               }
               catch(err) {
+                
                   scope.data = [];
               }
+             // console.log(scope.data)
 
               chart.datum(scope.data).call(pack);
           }
@@ -58,11 +62,6 @@ angular.module('geomediaApp')
                   scope.drawPack();
               }
           })
-
-
-
-
-
       }
     };
   });

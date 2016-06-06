@@ -23,6 +23,7 @@ angular.module('geomediaApp')
               .on("brushed", function(d) {
                   startDate = d[0];
                   endDate = d[1];
+               
                   $rootScope.$broadcast("dateChange",d);
                   if(!scope.$$phase) {
                       scope.$apply()
@@ -32,11 +33,13 @@ angular.module('geomediaApp')
         scope.$watch("aggrByTime",function(newVal, oldVal){
           if(newVal) {
 
+
+
            startDate = scope.aggrByTime[0].key;
            endDate = scope.aggrByTime[ scope.aggrByTime.length - 1 ].key;
 
            timeline.extent([startDate, endDate]);
-
+            console.log(scope.aggrByTime);
 
            chart.datum(scope.aggrByTime).call(timeline)
           }
@@ -44,12 +47,14 @@ angular.module('geomediaApp')
 
           $rootScope.$watch('[gotData,filteredMedias.length]',function(newValue,oldValue){
               if(newValue!=oldValue) {
+                console.log(scope.aggrByTime);
                   chart.datum(scope.aggrByTime).call(timeline)
               }
           },true)
 
           $rootScope.$watch('[gotData,filteredCountries.length]',function(newValue,oldValue){
               if(newValue!=oldValue) {
+                console.log(scope.aggrByTime);
                   chart.datum(scope.aggrByTime).call(timeline)
               }
           },true)

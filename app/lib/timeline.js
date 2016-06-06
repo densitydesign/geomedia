@@ -58,7 +58,7 @@
         //var x = d3.time.scale().range([0, width]);
         var y = d3.scale.linear().range([height, 0]);
 
-        var x = d3.scale.ordinal().rangeRoundBands([0, width], 0);
+        var x = d3.scale.ordinal().rangeRoundBands([0, width], 0)
 
 
         // X-axis.
@@ -149,8 +149,11 @@
             if(!fixed){
               brush.clear();
               extent = null;
+
+
               dispatch.brushed([x.domain()[0],x.domain()[x.domain().length-1]])
             }else{
+
               var b = brush.extent();
               var leftEdges = x.range();
               var width = x.rangeBand();
@@ -160,6 +163,8 @@
                 ex2 = ex1 + width;
 
               var newExtent = [ex1,ex2]
+
+             
 
               d3.select(this).transition()
                 .call(brush.extent(newExtent))
@@ -173,9 +178,12 @@
 
             }
           }else{
+
             var b = brush.extent();
 
             var leftEdges = x.range();
+
+
             var width = x.rangeBand();
             var j;
             for(j=0; b[0] > (leftEdges[j] + width); j++) {};
@@ -190,10 +198,15 @@
               ex1=x(x.domain()[j]);
             }
 
+            if(k == leftEdges.length) k--;
+
             if( b[1] < (x(x.domain()[k])+ width/2)){
               ex2=x(x.domain()[k-1])+width;
+
             }else{
+
               ex2=x(x.domain()[k])+width;
+
             }
 
             var newExtent = [ex1, ex2]
