@@ -21,6 +21,7 @@ angular.module('geomediaApp')
         var pack = geomedia.pack()
           .chartWidth(chartWidth)
           .chartHeight(chartHeight)
+          .keyword($rootScope.keyword)
 
 
 

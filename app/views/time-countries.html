@@ -28,10 +28,11 @@
 <div class="multistream">
   <div class="d3-tip ttip-s">
     <h5>
-      {{tip.key}}
+      Week of {{tip.key}}
     </h5>
-    <p>Articles <b class="blu">{{tip.val}}</b></p>
-    <p>Ratio <b class="blu">{{(tip.ratio*100).toFixed(2)}}%</b></p>
+    <p>articles <b class="blu">{{tip.val}}</b></p>
+    <p>articles on {{$root.keyword}} <b class="blu">{{tip.val*tip.ratio | number:0}}</b></p>
+    <p>% of articles on {{$root.keyword}} <b class="blu">{{(tip.ratio*100).toFixed(2)}}%</b></p>
   </div>
   <streamaxes></streamaxes>
   <div class="stream-item" ng-repeat="stream in entries track by $index | limitTo:10 ">

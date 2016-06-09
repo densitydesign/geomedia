@@ -73,8 +73,8 @@ body {
 
 }
 
-#HeaderLeft p{
-
+#HeaderLeft img{
+  cursor:pointer;
 }
 
 #home{
@@ -570,7 +570,7 @@ stream, pack, network{
 
 network{
   position: relative;
-  z-index: -1;
+  z-index: 1;
 }
 
 .streamsingle{
@@ -703,12 +703,11 @@ dorling{
     display: table;
     width: 100%;
     overflow:hidden;
-    background-color:#f9f9f9;
+    background-color:#ffffff;
     height: calc(100% + 80px); /* For at least Firefox */
     min-height: 100%;
     margin-top:-80px;
     text-align: center;
-
 }
 .site-wrapper-inner {
     display: table-cell;
@@ -860,7 +859,7 @@ dorling{
 .logo-cover{
     width: 100%;
     height: 115px;
-    background-image: url("../images/logo.png");
+    background-image: url("../images/gif-loading.gif");
     background-position: center;
     background-repeat: no-repeat;
 
@@ -970,11 +969,12 @@ streamaxes{
     margin-bottom:40px;
 }
 .loading p{
-    font-size:2em;
+  margin-top:2em;
+    font-size:1.3em;
 }
 .loading img{
   display:block;
-  width:100px;
+  width:auto;
   margin:40vh auto 0 auto;
 }
 
@@ -989,6 +989,7 @@ streamaxes{
   padding-bottom: 30px;
   width: 350px;
   position: absolute;
+  z-index:2;
   left: -350px;
   transition: all .5s ease-out;
 
@@ -1124,5 +1125,149 @@ cursor:pointer;
   overflow-y: auto;
 }
 
+.dataset{
+
+  background: #F9F9F9;
+  border: 1px solid #E3E3E3;
+  font-family: 'Source Serif Pro', serif;
+  padding: 15px;
+  color: #4A4A4A;
+  letter-spacing: 0.67px;
+  word-wrap: break-word;
+  margin-top: 10px;
+  text-align: left;
+  position:relative;
+  display: block;
+  -webkit-transition: background 0.2s; /* Safari */
+  transition: background 0.2s;
+  display: inline-block;
+  /*padding:  .25rem;*/
+  width:  100%;
+
+}
 
 
+.dataset h4{
+  padding-bottom: 9px;
+  padding-top: 10px;
+  font-family: 'Source Serif Pro', serif;
+  font-size: 23px;
+  letter-spacing: 0.78px;
+  margin: 0px;
+}
+
+.dataset a, .dataset a:hover, .dataset a:active{
+  color: #4A4A4A;
+}
+
+
+.dataset p{
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 14px;
+  color: #4A4A4A;
+  letter-spacing: 0.64px;
+  line-height: 19px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+
+.riga{
+  -moz-column-width: 18em;
+  -webkit-column-width: 18em;
+  -moz-column-gap: 1em;
+  -webkit-column-gap:1em;
+}
+
+stream .y.axis .tick line{
+  stroke:#999;
+}
+
+stream .y.axis .tick text{
+  fill:#999;
+  font-family:"Source Sans Pro";
+  font-size:0.9em;
+}
+
+.ttip-title{
+  font-weight:bold;
+}
+.yellow-fill{
+  fill: #E2BF29;
+}
+
+
+/*tooltips*/
+
+.sigma-tooltip {
+  width: 240px;
+  padding:5px;
+  max-height: 280px;
+  background-color: #f3f3f3;
+  color: #4A4A4A;
+
+}
+.sigma-tooltip-header {
+  font-weight: bold;
+  padding:5px;
+
+}
+
+.sigma-tooltip > .arrow {
+  border-width: 10px;
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+.sigma-tooltip.top {
+  margin-top: -12px;
+}
+.sigma-tooltip.top > .arrow {
+  left: 50%;
+  bottom: -10px;
+  margin-left: -10px;
+  border-top-color: rgb(249, 247, 237);
+  border-bottom-width: 0;
+}
+
+.sigma-tooltip.bottom > .arrow {
+  left: 50%;
+  top: -10px;
+  margin-left: -10px;
+  border-bottom-color: rgb(249, 247, 237);
+  border-top-width: 0;
+}
+.sigma-tooltip.left {
+  margin-left: -12px;
+}
+.sigma-tooltip.left > .arrow {
+  top: 50%;
+  right: -10px;
+  margin-top: -10px;
+  border-left-color: rgb(249, 247, 237);
+  border-right-width: 0;
+}
+.sigma-tooltip.right {
+  margin-left: 12px;
+}
+.sigma-tooltip.right > .arrow {
+  top: 50%;
+  left: -10px;
+  margin-top: -10px;
+  border-right-color: rgb(249, 247, 237);
+  border-left-width: 0;
+}
+#graph-container{
+  position:relative;
+}
+.sigma-tooltip b.blu{
+  color:#427A99;
+}
+.sigma-ttip-line{
+  padding:5px;
+}

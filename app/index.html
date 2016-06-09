@@ -39,15 +39,15 @@
 <!-- Add your site or application content here -->
 
 <loader ng-show="!$root.gotdata"></loader>
-
+<!--
 <div ng-show="$root.updating" class="loading">
   <img src="images/gif-loading.gif"/>
 
 </div>
-
+-->
 <topbar ng-show="$root.gotdata"></topbar>
 
-<div class="container-fluid fullheight">
+<div ng-style="{'height':$root.gotdata?100+'%':0}" class="container-fluid fullheight">
   <div class="row fullheight">
 
   <datapanel ng-show="$root.gotdata"></datapanel>
@@ -87,6 +87,7 @@
 <script src="bower_components/angucomplete-alt/angucomplete-alt.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/d3-tip/index.js"></script>
+<script src="bower_components/mustache.js/mustache.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 <script src="https://d3js.org/d3-time.v0.2.min.js"></script>
@@ -99,7 +100,7 @@
 <script src="lib/pack.js"></script>
 <script src="lib/conic-gradient.js"></script>
 <script src="lib/sigma.js/sigma.min.js"></script>
-<script src="lib/sigma.js/plugins.min.js"></script>
+<script src="lib/sigma.js/plugins.js"></script>
 <script src="scripts/app.js"></script>
 <script src="scripts/controllers/main.js"></script>
 <script src="scripts/controllers/time.js"></script>

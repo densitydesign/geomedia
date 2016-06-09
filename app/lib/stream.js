@@ -13,11 +13,14 @@
       colors = ['#F8E9BA', '#E2BF29'],
       showx = true,
         prefix = "",
+      keyword = "",
         emit = false;
 
     function stream(selection){
       selection.each(function(data){
         var margin = {top: 10, right: 12, bottom: 30, left: 12};
+
+        if(showx) margin.left=60;
 
         var width = chartWidth - margin.left - margin.right,
           height = chartHeight - margin.top - margin.bottom;
@@ -45,8 +48,8 @@
             ttip.append("rect")
                 .attr("x",0)
                 .attr("y",0)
-                .attr("width",150)
-                .attr("height",80)
+                .attr("width",250)
+                .attr("height",130)
                 .style("fill","#f9f9f9")
                 .style("stroke","#e4e4e4");
 
@@ -61,13 +64,19 @@
                 .attr("class","ttip-articles")
                 .text("")
                 .attr("x",10)
-                .attr("y",40);
+                .attr("y",50);
+
+          ttip.append("text")
+            .attr("class","ttip-topic")
+            .text("")
+            .attr("x",10)
+            .attr("y",80);
 
             ttip.append("text")
                 .attr("class","ttip-ratio")
                 .text("")
                 .attr("x",10)
-                .attr("y",60);
+                .attr("y",110);
 
           gradient = chart.append("defs")
             .append("linearGradient")
@@ -175,6 +184,10 @@
                 .outerTickSize(0)
                 .tickFormat(d3.time.format("%b %y"))
 
+
+
+
+
             var xAxis2 = d3.svg.axis()
                 .scale(x)
                 .orient("bottom")
@@ -203,6 +216,22 @@
 
 
           if(showx) {
+
+            var yleg = d3.scale.linear()
+              .domain([-bigmax, 0, bigmax])
+              .range([0, streamHeight/2, streamHeight]);
+
+            var yAxis = d3.svg.axis()
+              .scale(yleg)
+              .orient("left")
+              .innerTickSize(10)
+              .outerTickSize(0)
+              .tickFormat(function(d){
+                if (d<0) return -d;
+                else return d;
+              })
+
+
               //vertical dynamic legend
               var legend = chart.append("g")
                   .attr('class', 'x axis xlines')
@@ -213,6 +242,11 @@
                   .attr('class', 'x axis')
                   .attr("transform", "translate(0," + (height / 2) + ")")
                   .call(xAxis2)
+
+            var ylegend = chart.append("g")
+              .attr('class', 'y axis')
+              .attr("transform", "translate(0," + (- height / 2) + ")")
+              .call(yAxis);
           }
 
           function showtip() {
@@ -232,11 +266,27 @@
               }
 
               if(!emit) {
-                  ttip.attr("transform", "translate(" + coords[0] + "," + (coords[1] + height / 2 - 100) + ")")
+                  ttip.attr("transform", "translate(" + coords[0] + "," + (coords[1] + height / 2 - 140) + ")")
                       .style("opacity", 1);
-                  ttip.select(".ttip-title").text(mydata.key)
-                  ttip.select(".ttip-articles").text("Articles " + mydata.val)
-                  ttip.select(".ttip-ratio").text("Ratio " + (mydata.ratio * 100).toFixed(2) + "%");
+                  ttip.select(".ttip-title").text("Week of "+ mydata.key)
+                  var arts = ttip.select(".ttip-articles")
+                arts.selectAll("tspan").remove()
+                    arts.append("tspan").text("articles ")
+                arts.append("tspan").attr("class","yellow-fill").text(mydata.val)
+
+                   // .text("Articles " + mydata.val)
+
+                var topic = ttip.select(".ttip-topic")
+                topic.selectAll("tspan").remove()
+                topic.append("tspan").text("articles on "+keyword+" ")
+                topic.append("tspan").attr("class","yellow-fill").text(Math.round(mydata.val * mydata.ratio))
+
+
+                var perc = ttip.select(".ttip-ratio")
+                perc.selectAll("tspan").remove()
+                perc.append("tspan").text("% of articles on "+keyword+" ")
+                perc.append("tspan").attr("class","yellow-fill").text((mydata.ratio * 100).toFixed(2) + "%")
+                  //.text("Ratio " + (mydata.ratio * 100).toFixed(2) + "%");
               }
               else{
                   emit.ttip([d3.event,mydata]);
@@ -287,6 +337,12 @@
           prefix = x;
           return stream;
       }
+
+    stream.keyword = function(x){
+      if (!arguments.length) return keyword;
+      keyword = x;
+      return stream;
+    }
 
       stream.emit = function(x){
           if (!arguments.length) return emit;

@@ -43,7 +43,7 @@
       <div class="ElasticList">
         <ul class="list-group">
           <li uib-tooltip-template="'views/media-tooltip.html'" tooltip-placement="top" ng-click="filterMedia(media)" ng-class="{'DeselectedItem':!media.active}" ng-repeat="media in $root.medias | orderBy:orderMediaByFilteredKey | filter:txtfiltMedia" class="list-group-item">
-            <span class="badge">{{media.value}}</span>
+            <span class="badge">{{media.value.count}}</span>
             {{media.key | medias}}
           </li>
         </ul>

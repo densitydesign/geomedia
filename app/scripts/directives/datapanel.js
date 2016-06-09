@@ -68,7 +68,7 @@ angular.module('geomediaApp')
             var filt = $filter('medias');
             return filt(obj.key)
           }
-          else return -obj.value
+          else return -obj.value.count
         };
 
         //countries
@@ -158,7 +158,7 @@ angular.module('geomediaApp')
             $rootScope.bycountry = $rootScope.cross.dimension(function(d) { return d['TAG_geo'] })
 
             //return initial list of medias
-            scope.aggrByTime = $rootScope.bytime.group().reduce(reduceAdd, reduceRemove, reduceInitial).top(Infinity);
+            scope.aggrByTime = $rootScope.bytime.group().reduce(reduceSingleAdd, reduceSingleRemove, reduceSingleInitial).top(Infinity);
 
 
             $rootScope.endDate = scope.format.parse($rootScope.bytime.top(1)[0].time);
@@ -173,8 +173,9 @@ angular.module('geomediaApp')
                 e.name = medias.getMediaName(e.key);
             })
 
+
               //console.log(_.map($rootScope.medias,"key"));
-            $rootScope.countries = $rootScope.bycountry.group().reduce(reduceAdd, reduceRemove, reduceInitial).top(Infinity);
+            $rootScope.countries = $rootScope.bycountry.group().reduce(reduceSingleAdd, reduceSingleRemove, reduceSingleInitial).top(Infinity);
             $rootScope.countries.forEach(function(e,j){
               e.active = true;
                 e.name = $filter('countries')(e.key);
@@ -227,6 +228,9 @@ angular.module('geomediaApp')
 
 
           scope.filterByRSS = function(rss) {
+
+            var isfiltered = false;
+
               var rssMedias = $rootScope.medias.filter(function(d){
                   return medias.getMediaType(d.key)  == rss;
               })
@@ -245,19 +249,41 @@ angular.module('geomediaApp')
 
         //reduce functions
         function reduceInitial() {
-          return 0;
+          return {count : 0, articles : 0, ontopic : 0};
         }
 
         function reduceAdd(p, v) {
          //return p + parseFloat(v.weight);
-          return p+1;
+          //return p+1;
+          p.count++;
+          p.articles+=parseFloat(v.weight);
+          if(v["TAG_event"] == $rootScope.keyword) p.ontopic++;
+          return p;
         }
 
         function reduceRemove(p, v) {
           //return p - parseFloat(v.weight);
-          return p-1
-
+          //return p-1
+          p.count--;
+          p.articles-=parseFloat(v.weight);
+          if(v["TAG_event"] == $rootScope.keyword) p.ontopic--;
+          return p;
         }
+
+
+
+        function reduceSingleInitial() {
+          return 0;
+        }
+
+        function reduceSingleAdd(p, v) {
+          return p+1;
+        }
+
+        function reduceSingleRemove(p, v) {
+          return p-1
+        }
+
 
         //filter by time intervals
         scope.filterByTime = function(start, end) {

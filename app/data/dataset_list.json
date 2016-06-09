@@ -1,0 +1,19 @@
+[
+  {
+    "filename": "20140101_20150630_W_weighted_Ebola.csv",
+    "name":"Ebola",
+    "description": "This corpus is composed of 36 international media RSS feeds, from 23 different countries. RSS data cover a period of one and half year (January 2014 to June 2015). These media RSS have been tagged by geographical units (countries) and by the topic \"Ebola\"."
+  },
+  {
+    "filename": "20140101_20150630_W_weighted_Earthquake.csv",
+    "name":"Earthquake",
+    "description": "This corpus is composed of 36 international media RSS feeds, from 23 different countries. RSS data cover a period of one and half year (January 2014 to June 2015). These media RSS have been tagged by geographical units (countries) and by the topic \"Earthquake\"."
+
+  },
+  {
+    "filename": "20140101_20150630_W_weighted_Climate.csv",
+    "name":"Climate",
+    "description": "This corpus is composed of 36 international media RSS feeds, from 23 different countries. RSS data cover a period of one and half year (January 2014 to June 2015). These media RSS have been tagged by geographical units (countries) and by the topic \"Climate\"."
+
+  }
+]

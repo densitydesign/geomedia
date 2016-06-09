@@ -36,6 +36,7 @@ module.exports = function(config) {
       'bower_components/angucomplete-alt/angucomplete-alt.js',
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/d3-tip/index.js',
+      'bower_components/mustache.js/mustache.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

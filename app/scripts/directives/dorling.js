@@ -13,7 +13,7 @@ angular.module('geomediaApp')
             restrict: 'E',
             link: function postLink(scope, element, attrs) {
 
-                var tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return "<h5>"+ d.label+"</h5><p>Articles <b class='blu'>"+d.articles+"</b></p><p>Ratio <b class='blu'>"+(d.ratio*100).toFixed(2)+"%</b></p>" });
+                var tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return "<h5>"+ d.label+"</h5><p>geo-tagged articles <b class='blu'>"+d.articles+"</b></p><p>articles on "+$rootScope.keyword+" <b class='blu'>"+Math.round((d.articles*d.ratio))+"</b></p><p>% of articles on "+$rootScope.keyword+" <b class='blu'>"+(d.ratio*100).toFixed(2)+"%</b></p>" });
 
                 /* Invoke the tip in the context of your visualization */
 

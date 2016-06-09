@@ -27,7 +27,7 @@ angular.module('geomediaApp')
                   scope.data = _.cloneDeep(scope.packdata({k: scope.packindex})).map(function(d){
 
                       d.values.forEach(function(e,j){
-                       
+
                           e.count = e.values.count;
                           e.ratio = e.values.ratio;
                           delete e['values'];
@@ -36,7 +36,7 @@ angular.module('geomediaApp')
                   });
               }
               catch(err) {
-                
+
                   scope.data = [];
               }
              // console.log(scope.data)
@@ -47,11 +47,12 @@ angular.module('geomediaApp')
 
           var pack = geomedia.pack()
               .chartHeight(scope.packheight)
+              .keyword($rootScope.keyword)
               .pad(3);
 
           scope.$on("media_countries_refresh",function(){
               var chartWidth = parseInt(chart.style("width").replace("px",""));
-              pack.chartWidth(chartWidth);
+              pack.chartWidth(chartWidth)
               //console.log("udpate please")
               scope.drawPack();
 

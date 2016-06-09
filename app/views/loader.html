@@ -5,7 +5,8 @@
 -->
 <div ng-show="$root.loading" class="loading">
 
-    <i class="fa fa-spinner fa-spin"></i>
+   <!-- <i class="fa fa-spinner fa-spin"></i>-->
+  <img src="images/logo-home.gif"/>
 
     <p>Please wait, the data loading phase could take up to some minutes</p>
 
@@ -18,15 +19,21 @@
             <div class="inner cover">
                 <div class="logo-cover"></div>
                 <h1 class="cover-heading">Geomediatic</br> Barometer</h1>
-                <p class="lead intro-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lacinia nulla non mi venenatis mattis. Cras rutrum a arcu quis maximus.</p>
+                <p class="lead intro-text">Choose a dataset:</p>
 
-                <div class="intro-upload">
 
-                    <!--<p> upload your data or <a ng-click="loadEbola()">use a sample</a></p>-->
-                    <p><a ng-click="loadEbola()">use a sample dataset</a></p>
-                    <!--<div ngf-drop="" ng-model="files" ngf-drag-over-class="dragOverClassObj"  ngf-enable-firefox-paste="true"  class="drag Aligner">
-                        <i class="fa fa-cloud-upload AlignerItem"></i>-->
-                </div>
+              <div class="riga">
+              <div ng-repeat="dataset in $root.datalist" class="dataset">
+
+                <h4><a ng-click="loadDataset(dataset.filename)">{{dataset.name}}</a></h4>
+                <p>{{dataset.description}}</p>
+
+
+              </div>
+              </div>
+
+
+
             </div>
         </div>
     </div>

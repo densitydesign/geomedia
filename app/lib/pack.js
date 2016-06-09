@@ -11,16 +11,17 @@
     var chartWidth = 200,
       chartHeight = 700,
       colors = ['#EFC9CC', '#EF4141'],
-        pad = 20;
+        pad = 20,
+      keyword="";
 
     function pack(selection){
       selection.each(function(data){
-        var margin = {top: 10, right: 12, bottom: 30, left: 12};
+        var margin = {top: 30, right: 12, bottom: 30, left: 12};
 
-          var tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return "<h5>"+ d.key+"</h5><p>Articles <b class='red'>"+d.count+"</b></p><p>Ratio <b class='red'>"+(d.ratio*100).toFixed(2)+"%</b></p>" });
+        var tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return "<h5>"+ d.key+"</h5><p>articles <b class='red'>"+d.count+"</b></p><p>articles on "+keyword+" <b class='red'>"+(Math.round(d.count*d.ratio))+"</b></p><p>% of articles on "+keyword+" <b class='red'>"+(d.ratio*100).toFixed(2)+"%</b></p>" });
 
 
-          var width = chartWidth - margin.left - margin.right,
+        var width = chartWidth - margin.left - margin.right,
           height = chartHeight - margin.top - margin.bottom;
 
         var chart,
@@ -32,7 +33,7 @@
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
-            .attr("transform", "translate(" + margin.left + "," + 0 + ")");
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         }
         else
@@ -41,7 +42,7 @@
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .select('g')
-            .attr("transform", "translate(" + margin.left + "," + 0 + ")");
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
         }
 
 
@@ -73,8 +74,13 @@
           .selectAll("circle")
           .data(nodes, function(d){return d.key})
 
+        var legs = chart//.datum(data)
+          .selectAll("text.leg")
+          .data(nodes.filter(function(d){return d.parent && d.values}), function(d){return d.key})
+
+
         var texts = chart
-          .selectAll("text")
+          .selectAll("text.ttip")
 
          // .data(nodes.filter(function(d) { return !d.values && d.count >= countMax*1/4}), function(d){return d.key})
             .data(nodes.filter(function(d) { return !d.values && d.r >=17}), function(d){return d.key})
@@ -97,7 +103,7 @@
             })
             .on('mouseover', tip.show)
             .on('mouseout', tip.hide);
-        
+
         circs
           .transition().duration(500)
           .style("fill", function(d) {
@@ -120,6 +126,7 @@
         texts
           .enter().append("text")
           .attr("text-anchor", "middle")
+          .attr("class","ttip")
           .attr("x",0)
           .attr("y",0)
             .style("font-size",9)
@@ -128,8 +135,33 @@
           .attr("transform",function(d) {return "translate("+d.x+","+d.y+")"})
           .each(addText)
 
+
+
+
+        legs
+          .enter().append("text")
+          .attr("text-anchor", "middle")
+          .attr("class","leg")
+          .attr("x",0)
+          .attr("y",0)
+          .style("font-size",10)
+          .style("fill","#999")
+          .attr("dy", "0.3em")
+          .style('opacity',0)
+          .attr("transform",function(d) {
+            var legx = Math.cos(getAngle(d.x, width/2, d.y, height/2))
+            var legy = Math.sin(getAngle(d.x, width/2, d.y, height/2))
+            return "translate("+(legx*(d.r+20) + d.x)+","+(legy*(d.r+20) + d.y)+")"})
+          .text(function(d){return d.key});
+
+
           //.text(function(d) { return d.key})
 
+
+        function getAngle(x1,x2,y1,y2) {
+
+          return Math.atan2(y1 - y2, x1 - x2);
+        }
 
 
         function addText(d) {
@@ -166,11 +198,26 @@
               .attr("transform",function(d) {return "translate("+d.x+","+d.y+")"})
             .style('opacity',1)
 
+
+
+        legs
+          .transition().duration(500)
+          .attr("transform",function(d) {
+            var legx = Math.cos(getAngle(d.x, width/2, d.y, height/2))
+            var legy = Math.sin(getAngle(d.x, width/2, d.y, height/2))
+            return "translate("+(legx*(d.r+20) + d.x)+","+(legy*(d.r+20) + d.y)+")"})
+          .style('opacity',1)
+
             //.attr("x", function(d){return d.x})
           //.attr("y", function(d){return d.y})
 
 
         texts
+          .exit()
+          .remove();
+
+
+        legs
           .exit()
           .remove();
 
@@ -239,6 +286,12 @@
           pad = x;
           return pack;
       }
+
+    pack.keyword = function(x){
+      if (!arguments.length) return keyword;
+      keyword = x;
+      return pack;
+    }
 
     return pack;
   }

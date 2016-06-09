@@ -24,7 +24,7 @@ angular.module('geomediaApp')
                     var obj = {};
                     obj.count = leaves.length;
                     obj.ratio = leaves.filter(function (d) {
-                        return d.TAG_event == "Ebola"
+                        return d.TAG_event == $rootScope.keyword
                     }).length / leaves.length;
                     return obj;
                 })
@@ -70,5 +70,5 @@ angular.module('geomediaApp')
             })
 
         }
-    
+
   });

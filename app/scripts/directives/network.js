@@ -7,24 +7,26 @@
  * # network
  */
 angular.module('geomediaApp')
-  .directive('network', function ($rootScope) {
+  .directive('network', function ($rootScope, $filter) {
     return {
       template: '<div id="graph-container"></div>',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
 
 
-        console.log("instance!")
 
         var chart = d3.select(element[0]);
         var chartWidth = parseInt(chart.style("width").replace("px", ""));
 
         var s = "";
+        var tooltips = null;
 
         var  g = {
           nodes: [],
           edges: []
         };
+
+
 
 
         function reduceAdd(p, v) {
@@ -49,7 +51,6 @@ angular.module('geomediaApp')
 
 
           scope.$on('go',function(){
-                  console.log("lol|!!");
                   scope.drawNetwork();
 
           })
@@ -61,7 +62,8 @@ angular.module('geomediaApp')
         })
 
         $rootScope.$watch('filteredCountries.length',function(newValue,oldValue){
-          if (newValue) {
+          if (newValue!=oldValue) {
+            console.log("recompute network");
             scope.drawNetwork();
           }
         })
@@ -82,6 +84,11 @@ angular.module('geomediaApp')
           var nodes = {}
           var links = {}
 
+          g = {
+            nodes: [],
+            edges: []
+          };
+
           var maxNode = 0;
           var maxLink = 0;
 
@@ -98,7 +105,7 @@ angular.module('geomediaApp')
 
                   if (e.value.countries[i] in nodes) {
                     nodes[e.value.countries[i]].size++;
-                    e.value.tag in nodes[e.value.countries[i]] ? nodes[e.value.countries[i]][e.value.tag]++ : nodes[e.value.countries[i]][e.value.tag]=1;
+                    e.value.tag in nodes[e.value.countries[i]] ? nodes[e.value.countries[i]][e.value.tag]++ : nodes[e.value.countries[i]][e.value.tag] = 1;
                     if (nodes[e.value.countries[i]].size > maxNode) maxNode = nodes[e.value.countries[i]].size;
                   }
 
@@ -113,12 +120,13 @@ angular.module('geomediaApp')
                     nodes[e.value.countries[i]][e.value.tag] = 1;
                   }
 
-
-                  if (ctrs.join("-") in links) {
-                    links[ctrs.join("-")].weight++;
-                    if (links[ctrs.join("-")].weight > maxLink) maxLink = links[ctrs.join("-")].weight;
+                  if (e.value.tag == $rootScope.keyword) {
+                    if (ctrs.join("-") in links) {
+                      links[ctrs.join("-")].weight++;
+                      if (links[ctrs.join("-")].weight > maxLink) maxLink = links[ctrs.join("-")].weight;
+                    }
+                    else links[ctrs.join("-")] = {id: ctrs.join("-"), source: ctrs[0], target: ctrs[1], weight: 1};
                   }
-                  else links[ctrs.join("-")] = {id: ctrs.join("-"), source: ctrs[0], target: ctrs[1], weight: 1};
                 }
               }
 
@@ -142,8 +150,13 @@ angular.module('geomediaApp')
             }
           })
 
-          links = _.values(links);
-          nodes = _.values(nodes);
+
+
+
+          nodes = _.values(nodes).filter(function(e){return $rootScope.keyword in e});
+
+          var existingNodes = _.map(nodes,'id');
+          links = _.values(links).filter(function(e){return existingNodes.indexOf(e.source)>-1 && existingNodes.indexOf(e.target)>-1 });
 
           var weightScale = d3.scale.log().range([0,1]).domain([1,maxLink]);
           var maxCol = d3.max(nodes, function(d){return d[$rootScope.keyword] / d.size})
@@ -151,19 +164,17 @@ angular.module('geomediaApp')
 
 
 
-          g = {
-            nodes: [],
-            edges: []
-          };
 
           nodes.forEach(function(d){
 
             g.nodes.push({
               id: d.id,
               label: d.label,
+              name: $filter('countries')(d.label),
               x: d.x,
               y: d.y,
-              size:d.size,
+              ratio:(d[$rootScope.keyword]/d.size*100).toFixed(2),
+              size:d[$rootScope.keyword],
               color: colScale(d[$rootScope.keyword] / d.size)
             });
 
@@ -194,15 +205,53 @@ angular.module('geomediaApp')
                 minEdgeSize:0.5,
                 maxEdgeSize:5,
                 font:"Source Serif Pro",
+                mouseEnabled:true,
+                enableHovering:true,
                 labelAlignment:"center"
               }
             });
+
+
+            var ttipconfig = {
+              node: [{
+                show: 'hovers',
+                hide: 'hovers',
+                /*cssClass: 'sigma-tooltip',*/
+                position: 'top',
+                /*template:'<div class="arrow"></div>' +
+                '<div class="sigma-tooltip-header"> Menu </div>'*/
+                //autoadjust: true,
+               template: '<div class="arrow"></div>' +
+                ' <div class="sigma-tooltip-header">{{name}}</div>' +
+                '  <div class="sigma-tooltip-body">' +
+                //'    <table>' +
+                '      <div class="sigma-ttip-line"><span>articles on ' + $rootScope.keyword + '</span> <b class="blu"> {{size}}</b></div>' +
+               '      <div class="sigma-ttip-line"><span>% of articles on ' + $rootScope.keyword + '</span> <b class="blu"> {{ratio}}%</b></div>' +
+                //'    </table>' +
+                '  </div>',
+
+                renderer: function (node, template) {
+                  // The function context is s.graph
+                  node.degree = this.degree(node.id);
+                  // Returns an HTML string:
+                  return Mustache.render(template, node);
+                  // Returns a DOM Element:
+                  //var el = document.createElement('div');
+                  //return el.innerHTML = Mustache.render(template, node);
+                }
+              }]
+            }
+
+
 
 
             s.addRenderer({
               container: document.getElementById('graph-container'),
               type: 'canvas',
             });
+
+
+
 
             sigma.layouts.configForceLink(s, {
               worker: true,
@@ -214,6 +263,16 @@ angular.module('geomediaApp')
 
             s.graph.read(g);
             s.refresh();
+
+
+
+            var tooltips = sigma.plugins.tooltips(s, s.renderers[0], ttipconfig);
+            tooltips.bind('shown', function(event) {
+              console.log('tooltip shown', event);
+            });
+            tooltips.bind('hidden', function(event) {
+              console.log('tooltip hidden', event);
+            });
           }
 
           else {

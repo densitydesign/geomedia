@@ -16710,6 +16710,9 @@ sigma.plugins.colorbrewer = {YlGn: {
    * @param {object}   options  An object with options.
    */
   function Tooltips(s, renderer, options) {
+
+
+   
     var self = this,
         _tooltip,
         _timeoutHandle,
@@ -18650,7 +18653,7 @@ sigma.plugins.colorbrewer = {YlGn: {
     context.closePath();
     context.fill();
     context.restore();
-  }    
+  }
   };
 }).call(this);
 ;(function(undefined) {

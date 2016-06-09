@@ -16,13 +16,19 @@ angular.module('geomediaApp')
         var dsv = d3.dsv(";", "text/plain");
 
 
-        scope.loadEbola = function() {
+        scope.loadDataset = function(fname) {
             $rootScope.loading=true;
-          fileService.getFile("data/20140101_20150630_W_weighted_Ebola.csv").then(function(d){
+          fileService.getFile("data/"+fname).then(function(d){
             dataservice.setData(dsv.parse(d));
 
+            var re = /_((?!.*_).*)\.csv/;
+
             $rootScope.gotdata = true;
-            $rootScope.keyword= "Ebola";
+            //$rootScope.keyword = scope.fname.match(re)[0];
+            $rootScope.keyword = fname.match(re)[1];
+            //console.log(scope.fname.match(re));
+
+
           })
 
 

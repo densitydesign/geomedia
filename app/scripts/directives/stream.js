@@ -19,10 +19,17 @@ angular.module('geomediaApp')
 
         var stream = geomedia.stream()
           .chartWidth(chartWidth)
+          .keyword($rootScope.keyword)
 
           scope.$on("time_update", function() {
               scope.updateGraph();
           })
+
+        $rootScope.$watch("keyword",function(n,o){
+          if(n!=o && n) {
+          stream.keyword($rootScope.keyword)
+          }
+        })
 
         scope.updateGraph = function() {
 

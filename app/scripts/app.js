@@ -84,4 +84,10 @@ angular
 
     })
 
+    fileService.getFile('data/dataset_list.json').then(function(d){
+     
+      $rootScope.datalist = d;
+    })
+
+
   });
